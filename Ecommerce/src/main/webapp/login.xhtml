@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="css" name="estilos.css"  />
+        <h:outputStylesheet library="css" name="estiloLogin.css"  />
+        <div class="divBody">
+            <h:form id="form1">
+                <p:growl id="mensagem" />
+                <div class="divLogin">
+                    <p:panelGrid columns="1" layout="grid">
+                        <h:panelGrid columns="1" cellpadding="0" cellspacing="0" styleClass="padPg pgWidth padTpAcesso">
+                            <p:outputLabel value="Tipo de Acesso" for="tipoAcesso" styleClass="padLabel" />
+                            <p:selectOneMenu id="tipoAcesso" value="#{loginBean.tipoAcesso}" styleClass="stSelect">
+                                <f:selectItem itemLabel="Selecione" itemValue="#{null}" itemDisabled="true" />
+                                <f:selectItems value="#{loginBean.tiposAcessoLogin}" var="tpAcesso" itemValue="#{tpAcesso}" itemLabel="#{tpAcesso.tipoAcessoLabel}" />
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="0" cellspacing="0" styleClass="padPg pgWidth">
+                            <p:outputLabel value="Usuário" for="usuario" styleClass="padLabel" />
+                            <p:inputText id="usuario" value="#{loginBean.inputLogin}" styleClass="stInput" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="0" cellspacing="0" styleClass="padPg pgWidth">
+                            <p:outputLabel value="Senha" for="senha" styleClass="padLabel" />
+                            <p:inputText id="senha" value="#{loginBean.inputSenha}" styleClass="stInput" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="0" cellspacing="0" styleClass="padPg pgWidth">
+                            <p:commandButton value="Login" actionListener="#{loginBean.autenticar()}" styleClass="btnLogin" process=":form1" update=":form1" />
+                        </h:panelGrid>
+                    </p:panelGrid>
+                </div>
+            </h:form>
+        </div>
+    </h:body>
+</html>

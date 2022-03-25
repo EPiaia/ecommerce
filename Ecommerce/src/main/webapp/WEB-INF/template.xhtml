@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title><ui:define name="title">E-commerce</ui:define></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <f:event type="preRenderView" listener="#{geralBean.verificarPermissaoUsuario()}" />
+    </h:head>
+    <h:body>
+        <h:outputStylesheet library="css" name="estilos.css"  />
+        <div class="topbar">
+            <h:link outcome="/index" title="Ir para a Página Principal">
+                <p:graphicImage library="imagens" name="logo-amazon.png" styleClass="imgLogo" />
+            </h:link>
+            <h:form id="formBusca" styleClass="formBusca">
+                <div class="ui-inputgroup">
+                    <p:inputText id="inputBusca" styleClass="inputPesquisa" />
+                    <p:commandButton icon="pi pi-search" styleClass="btnPesquisa"/>
+                </div>
+            </h:form>
+            <h:form id="formBtnsTopbar" styleClass="formBtnsTopbar">
+                <p:menuButton buttonStyleClass="btnTopBar btnConta" icon="pi pi-user" rendered="#{not geralBean.tipoAcessoUsuarioPublico}">
+                    <p:menuitem value="Sair" actionListener="#{loginBean.sair()}" ajax="false" />
+                </p:menuButton>
+                <p:button styleClass="btnTopBar btnConta" outcome="login" icon="pi pi-sign-in" rendered="#{geralBean.tipoAcessoUsuarioPublico}" />
+                <p:menuButton buttonStyleClass="btnTopBar btnCarrinho" icon="pi pi-shopping-cart">
+                    <p:menuitem value="Item 1" />
+                    <p:menuitem value="Total" disabled="true" />
+                    <p:menuitem>
+                        <p:button value="ir para o carrinho" />
+                    </p:menuitem>
+                </p:menuButton>
+            </h:form>
+        </div>
+        <div>
+            <ui:insert name="content" />
+        </div>
+    </h:body>
+</html>

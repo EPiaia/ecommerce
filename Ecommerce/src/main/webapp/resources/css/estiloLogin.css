@@ -1,0 +1,55 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url(/Ecommerce/javax.faces.resource/login_bg.jpg.xhtml?ln=imagens) no-repeat;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+body::after {
+    opacity: 0.5;
+}
+
+.divBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+body .ui-panelgrid .ui-panelgrid-cell {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.padPg {
+    padding-bottom: 10px !important;
+}
+
+.padTpAcesso {
+    padding-top: 10px !important;
+}
+
+.divLogin {
+    width: 310px;
+    overflow: hidden;
+    border-radius: 10px;
+    -webkit-box-shadow: 3px 4px 10px 5px rgba(0,0,0,0.67); 
+    box-shadow: 3px 4px 10px 5px rgba(0,0,0,0.67);
+}
+
+.stInput {
+    width: 100%;
+}
+
+.stSelect {
+    width: 100%;
+}
+
+.btnLogin {
+    width: 100%;
+}
+
+.pgWidth {
+    width: 100%;
+}
