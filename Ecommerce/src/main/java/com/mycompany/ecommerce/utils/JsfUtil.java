@@ -6,12 +6,15 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.PrimeFaces;
 
 /**
  *
  * @author Piaia
  */
 public class JsfUtil implements Serializable {
+
+    private static PrimeFaces pf = PrimeFaces.current();
 
     public static Map<String, Object> getSessionMap() {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -45,7 +48,11 @@ public class JsfUtil implements Serializable {
 
     public static String getPaginaAtual() {
         HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        return request.getRequestURI().replace("/Ecommerce/", "").replace(".xhtml", "");
+        String uri = request.getRequestURI().replace("/Ecommerce", "");
+        if (uri.isEmpty() || uri.equals("/")) {
+            return "index";
+        }
+        return uri.substring(uri.lastIndexOf("/") + 1, uri.indexOf(".xhtml"));
     }
 
     public static void redirect(String page) {
@@ -54,6 +61,14 @@ public class JsfUtil implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void pfShowDialog(String widgetVar) {
+        pf.executeScript("PF('" + widgetVar + "').show();");
+    }
+
+    public static void pfHideDialog(String widgetVar) {
+        pf.executeScript("PF('" + widgetVar + "').hide();");
     }
 
 }

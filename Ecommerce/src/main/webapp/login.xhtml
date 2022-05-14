@@ -28,7 +28,7 @@
                         </h:panelGrid>
                         <h:panelGrid columns="1" cellpadding="0" cellspacing="0" styleClass="padPg pgWidth">
                             <p:outputLabel value="Senha" for="senha" styleClass="padLabel" />
-                            <p:inputText id="senha" value="#{loginBean.inputSenha}" styleClass="stInput" />
+                            <p:inputText id="senha" type="password" value="#{loginBean.inputSenha}" styleClass="stInput" />
                         </h:panelGrid>
                         <h:panelGrid columns="1" cellpadding="0" cellspacing="0" styleClass="padPg pgWidth">
                             <p:commandButton value="Login" actionListener="#{loginBean.autenticar()}" styleClass="btnLogin" process=":form1" update=":form1" />

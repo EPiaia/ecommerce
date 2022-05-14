@@ -1,14 +1,23 @@
 <ui:composition template="/WEB-INF/template.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <ui:define name="title">Home</ui:define>
 
     <ui:define name="content">
-        <form id="form1">
+        <h:form id="form1">
             <p:growl id="mensagens" />
             <p:outputLabel value="Olá #{geralBean.usuarioLogado.usrDesc}" />
-        </form>
+            <div class="container">
+                <div class="content">
+                    <p:dataGrid value="#{indexBean.produtos}" var="produto" columns="4" layout="grid" rows="4">
+                        <components:produto produto="#{produto}" />
+                    </p:dataGrid>
+                </div>
+            </div>
+        </h:form>
     </ui:define>
 </ui:composition>

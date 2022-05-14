@@ -1,0 +1,68 @@
+<ui:composition template="/WEB-INF/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">Cadastrar Marca</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:growl id="mensagens" />
+            <p:panel header="Informações da Marca" styleClass="panelGeral">
+                <p:panelGrid columns="2" layout="grid">
+                    <p:panelGrid columns="2" layout="grid">
+                        <p:panelGrid id="pgMarca" columns="1" layout="grid">
+                            <p:outputLabel value="Código" for="codMarca" />
+                            <p:inputText id="codMarca" value="#{cadastroMarcaBean.marca.marCod}" disabled="true" styleClass="inputTextCodigo" />
+
+                            <p:outputLabel value="Descrição" for="ipMarca" />
+                            <p:inputText id="ipMarca" value="#{cadastroMarcaBean.marca.marDesc}" maxlength="50" />
+                        </p:panelGrid>
+                    </p:panelGrid>
+                </p:panelGrid>
+                <f:facet name="footer">
+                    <p:commandButton value="Novo" icon="pi pi-plus" actionListener="#{cadastroMarcaBean.novaMarca()}" update=":form1" />
+                    <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{cadastroMarcaBean.salvar()}" update=":form1" />
+                    <p:commandButton value="Procurar" icon="pi pi-search" actionListener="#{cadastroMarcaBean.abrirPesquisaMarca()}" update=":formPesquisa" />
+                    <p:commandButton value="Deletar" icon="pi pi-trash" actionListener="#{cadastroMarcaBean.deletar()}" update=":form1"  />
+                </f:facet>
+            </p:panel>
+        </h:form>
+
+        <h:form id="formPesquisa">
+            <p:dialog id="buscaMarca" widgetVar="wvBuscaMarca" header="Pesquisar Marca" width="750">
+                <p:panel id="panelGeral">
+                    <p:panelGrid id="pgBscMarca" columns="1" layout="grid" styleClass="pgFiltrosPesquisa">
+                        <p:outputLabel value="Código" for="@next" />
+                        <p:inputText value="#{cadastroMarcaBean.filtroMarca.marCod}" styleClass="inputTextCodigo" />
+                        <p:outputLabel value="Descrição" for="@next" />
+                        <p:inputText value="#{cadastroMarcaBean.filtroMarca.marDesc}" autocomplete="false" />
+                        <f:facet name="footer">
+                            <h:panelGroup>
+                                <p:commandButton value="Pesquisar" icon="pi pi-search" style="margin-right: 10px"
+                                                 actionListener="#{cadastroMarcaBean.pesquisarMarcas()}" update=":formPesquisa:dtMarcas" />
+                                <p:commandButton value="Limpar" icon="pi pi-trash" actionListener="#{cadastroMarcaBean.limparPesquisaMarcas()}" update="pgBscMarca" />
+                            </h:panelGroup>
+                        </f:facet>
+                    </p:panelGrid>
+                    <br />
+                    <p:dataTable id="dtMarcas" value="#{cadastroMarcaBean.marcasDisponiveis}" var="marca" selectionMode="single"
+                                 selection="#{cadastroMarcaBean.marcaSelecionada}" rowKey="#{marca.marCod}">
+                        <p:column headerText="Código">
+                            <h:outputText value="#{marca.marCod}" />
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <h:outputText value="#{marca.marDesc}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+                <f:facet name="footer">
+                    <p:commandButton value="Confirmar" icon="pi pi-check" actionListener="#{cadastroMarcaBean.selecionarMarca()}" update=":form1:pgMarca" />
+                    <p:commandButton value="Fechar" icon="pi pi-times" onclick="PF('wvBuscaMarca').hide()" />
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

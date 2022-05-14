@@ -1,0 +1,67 @@
+<ui:composition template="/WEB-INF/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">Cadastrar Linha</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:growl id="mensagens" />
+            <p:panel header="Informações da Linha" styleClass="panelGeral">
+                <p:panelGrid columns="2" layout="grid">
+                    <p:panelGrid columns="2" layout="grid">
+                        <p:panelGrid id="pgLinha" columns="1" layout="grid">
+                            <p:outputLabel value="Código" for="codLinha" />
+                            <p:inputText id="codLinha" value="#{cadastroLinhaBean.linha.linCod}" disabled="true" styleClass="inputTextCodigo" />
+
+                            <p:outputLabel value="Descrição" for="ipLinha" />
+                            <p:inputText id="ipLinha" value="#{cadastroLinhaBean.linha.linDesc}" maxlength="50" />
+                        </p:panelGrid>
+                    </p:panelGrid>
+                </p:panelGrid>
+                <f:facet name="footer">
+                    <p:commandButton value="Novo" icon="pi pi-plus" actionListener="#{cadastroLinhaBean.novaLinha()}" update=":form1" />
+                    <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{cadastroLinhaBean.salvar()}" update=":form1" />
+                    <p:commandButton value="Procurar" icon="pi pi-search" actionListener="#{cadastroLinhaBean.abrirPesquisaLinha()}" update=":formPesquisa" />
+                    <p:commandButton value="Deletar" icon="pi pi-trash" actionListener="#{cadastroLinhaBean.deletar()}" update=":form1"  />
+                </f:facet>
+            </p:panel>
+        </h:form>
+
+        <h:form id="formPesquisa">
+            <p:dialog id="buscaLinha" widgetVar="wvBuscaLinha" header="Pesquisar Linha" width="750">
+                <p:panel id="panelGeral">
+                    <p:panelGrid id="pgBscLinha" columns="1" layout="grid" styleClass="pgFiltrosPesquisa">
+                        <p:outputLabel value="Código" for="@next" />
+                        <p:inputText value="#{cadastroLinhaBean.filtroLinha.linCod}" styleClass="inputTextCodigo" />
+                        <p:outputLabel value="Descrição" for="@next" />
+                        <p:inputText value="#{cadastroLinhaBean.filtroLinha.linDesc}" />
+                        <f:facet name="footer">
+                            <h:panelGroup>
+                                <p:commandButton value="Pesquisar" icon="pi pi-search" style="margin-right: 10px" actionListener="#{cadastroLinhaBean.pesquisarLinhas()}" update=":formPesquisa:dtLinhas" />
+                                <p:commandButton value="Limpar" icon="pi pi-trash" actionListener="#{cadastroLinhaBean.limparPesquisaLinhas()}" update="pgBscLinha" />
+                            </h:panelGroup>
+                        </f:facet>
+                    </p:panelGrid>
+                    <br />
+                    <p:dataTable id="dtLinhas" value="#{cadastroLinhaBean.linhasDisponiveis}" var="linha" selectionMode="single"
+                                 selection="#{cadastroLinhaBean.linhaSelecionada}" rowKey="#{linha.linCod}">
+                        <p:column headerText="Código">
+                            <h:outputText value="#{linha.linCod}" />
+                        </p:column>
+                        <p:column headerText="Descrição">
+                            <h:outputText value="#{linha.linDesc}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+                <f:facet name="footer">
+                    <p:commandButton value="Confirmar" icon="pi pi-check" actionListener="#{cadastroLinhaBean.selecionarLinha()}" update=":form1:pgLinha" />
+                    <p:commandButton value="Fechar" icon="pi pi-times" onclick="PF('wvBuscaLinha').hide()" />
+                </f:facet>
+            </p:dialog>
+        </h:form>
+    </ui:define>
+</ui:composition>

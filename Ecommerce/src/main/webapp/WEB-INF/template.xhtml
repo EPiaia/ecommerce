@@ -5,7 +5,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title><ui:define name="title">E-commerce</ui:define></title>
+        <title><ui:insert name="title">E-commerce</ui:insert></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <f:event type="preRenderView" listener="#{geralBean.verificarPermissaoUsuario()}" />
     </h:head>
@@ -35,6 +35,16 @@
                 </p:menuButton>
             </h:form>
         </div>
+        <h:form id="formMenu">
+            <p:menubar>
+                <p:submenu label="Cadastros" icon="pi pi-plus">
+                    <p:menuitem value="Cadastro de Produto" url="/Ecommerce/restrito/cadastros/cadastro_produto.xhtml" />
+                    <p:menuitem value="Cadastro de Marca" url="/Ecommerce/restrito/cadastros/cadastro_marca.xhtml" />
+                    <p:menuitem value="Cadastro de Linha" url="/Ecommerce/restrito/cadastros/cadastro_linha.xhtml" />
+                </p:submenu>
+            </p:menubar>
+        </h:form>
+        <br />
         <div>
             <ui:insert name="content" />
         </div>

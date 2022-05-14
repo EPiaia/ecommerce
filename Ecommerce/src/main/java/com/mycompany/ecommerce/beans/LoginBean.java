@@ -3,6 +3,7 @@ package com.mycompany.ecommerce.beans;
 import com.mycompany.ecommerce.domains.Usuario;
 import com.mycompany.ecommerce.services.GeralService;
 import com.mycompany.ecommerce.utils.JsfUtil;
+import com.mycompany.ecommerce.utils.StringUtil;
 import com.mycompany.ecommerce.utils.TipoAcessoEnum;
 import java.io.IOException;
 import java.io.Serializable;
@@ -39,7 +40,7 @@ public class LoginBean implements Serializable {
             return;
         }
 
-        String sql = String.format("SELECT u FROM Usuario u WHERE u.usrLogin = '%s' AND u.usrSenha = '%s' AND u.usrTpAcesso = %d", inputLogin, inputSenha, tipoAcesso.getTipoAcessoCodigo());
+        String sql = String.format("SELECT u FROM Usuario u WHERE u.usrLogin = '%s' AND u.usrSenha = '%s' AND u.usrTpAcesso = %d", inputLogin, StringUtil.MD5(inputSenha), tipoAcesso.getTipoAcessoCodigo());
 
         Query query = gs.getEntityManager().createQuery(sql);
         List<Usuario> usuarios = new ArrayList<>(query.getResultList());
