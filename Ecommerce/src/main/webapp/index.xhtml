@@ -10,10 +10,9 @@
     <ui:define name="content">
         <h:form id="form1">
             <p:growl id="mensagens" />
-            <p:outputLabel value="Olá #{geralBean.usuarioLogado.usrDesc}" />
             <div class="container">
                 <div class="content">
-                    <p:dataGrid value="#{indexBean.produtos}" var="produto" columns="4" layout="grid" rows="4">
+                    <p:dataGrid value="#{indexBean.produtos}" var="produto" columns="4" layout="grid" rows="4" rendered="#{not geralBean.tipoAcessoAdmin}" style="dgProdutos">
                         <components:produto produto="#{produto}" />
                     </p:dataGrid>
                 </div>

@@ -72,11 +72,11 @@ public class GeralBean implements Serializable {
     }
 
     public boolean isTipoAcessoCliente() {
-        return usuarioLogado.getUsrTpAcesso().equals(2);
+        return usuarioLogado.getUsrTpAcesso().equals(3);
     }
 
     public boolean isTipoAcessoAdmin() {
-        return usuarioLogado.getUsrTpAcesso().equals(3);
+        return usuarioLogado.getUsrTpAcesso().equals(2);
     }
 
     public Usuario getUsuarioLogado() {

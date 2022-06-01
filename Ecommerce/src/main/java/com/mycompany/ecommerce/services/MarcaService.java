@@ -17,7 +17,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @Named
-public class MarcaService extends BaseService {
+public class MarcaService extends BaseService<Marca> {
 
     @Override
     protected List<FiltrosPesquisa> getFiltros(Map<String, Object> filtros) {
@@ -41,11 +41,6 @@ public class MarcaService extends BaseService {
         sql = adicionarFiltros(sql, getFiltros(filtros));
         Query query = getEntityManager().createQuery(sql);
         return query.getResultList();
-    }
-
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Marca save(Marca marca) {
-        return getEntityManager().merge(marca);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

@@ -36,13 +36,7 @@
             </h:form>
         </div>
         <h:form id="formMenu">
-            <p:menubar>
-                <p:submenu label="Cadastros" icon="pi pi-plus">
-                    <p:menuitem value="Cadastro de Produto" url="/Ecommerce/restrito/cadastros/cadastro_produto.xhtml" />
-                    <p:menuitem value="Cadastro de Marca" url="/Ecommerce/restrito/cadastros/cadastro_marca.xhtml" />
-                    <p:menuitem value="Cadastro de Linha" url="/Ecommerce/restrito/cadastros/cadastro_linha.xhtml" />
-                </p:submenu>
-            </p:menubar>
+            <p:menubar model="#{menuBean.menu}" styleClass="menu" />
         </h:form>
         <br />
         <div>

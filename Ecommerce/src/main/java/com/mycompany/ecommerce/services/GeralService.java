@@ -1,5 +1,6 @@
 package com.mycompany.ecommerce.services;
 
+import com.mycompany.ecommerce.domains.Produto;
 import com.mycompany.ecommerce.utils.FiltrosPesquisa;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import javax.inject.Named;
  */
 @Stateless
 @Named
-public class GeralService extends BaseService {
+public class GeralService extends BaseService<Produto> {
 
     public GeralService() {
     }
