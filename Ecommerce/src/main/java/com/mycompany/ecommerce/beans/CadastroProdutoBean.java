@@ -98,6 +98,9 @@ public class CadastroProdutoBean implements Serializable {
             produto.setProDescDtIni(new Date());
         }
         this.produto = ps.save(this.produto);
+        for (ProdutoxImagem produtoxImagem : imagensProduto) {
+            pis.save(produtoxImagem);
+        }
         // percorrer imagens mudando o cod do produto na pk porque se for um novo produto só tem a
         JsfUtil.info("Registro salvo com sucesso");
     }
@@ -141,7 +144,8 @@ public class CadastroProdutoBean implements Serializable {
         }
         imagensProduto = new ArrayList<>();
         this.produto = produtoSelecionado;
-        this.produto.setFotosProduto(pis.getFotosProduto(produto));
+        imagensProduto = pis.getFotosProduto(produto);
+        this.produto.setFotosProduto(imagensProduto);
         JsfUtil.pfHideDialog("wvBuscaProduto");
     }
 
@@ -204,9 +208,13 @@ public class CadastroProdutoBean implements Serializable {
         imagem.getProdutoxImagemPK().setPxiProCod(produto.getProCod());
         imagem.setPxiOrdem(pis.getMaxOrdem(produto) + 1);
         imagensProduto.add(imagem);
-        pis.save(imagem);
-        imagensProduto = new ArrayList<>();
-        this.produto.setFotosProduto(pis.getFotosProduto(produto));
+        this.produto.setFotosProduto(imagensProduto);
+    }
+
+    public void removerImagem(ProdutoxImagem prodxImg) {
+        this.imagensProduto.remove(prodxImg);
+        this.produto.getFotosProduto().remove(prodxImg);
+        pis.delete(prodxImg);
     }
 
     public Produto getProduto() {
@@ -215,6 +223,14 @@ public class CadastroProdutoBean implements Serializable {
 
     public void setProduto(Produto produto) {
         this.produto = produto;
+    }
+
+    public List<ProdutoxImagem> getImagensProduto() {
+        return imagensProduto;
+    }
+
+    public void setImagensProduto(List<ProdutoxImagem> imagensProduto) {
+        this.imagensProduto = imagensProduto;
     }
 
     public List<Produto> getProdutosDisponiveis() {

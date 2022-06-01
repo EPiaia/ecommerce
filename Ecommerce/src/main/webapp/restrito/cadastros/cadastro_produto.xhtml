@@ -42,42 +42,53 @@
                             <p:outputLabel value="Observações" for="observacoes" />
                             <p:inputTextarea id="observacoes" value="#{cadastroProdutoBean.produto.proObservacoes}" rows="4" maxlength="500" />
 
-                            <p:outputLabel value="Valor Unitário (R$)" for="vlUni" />
-                            <p:inputText id="vlUni" value="#{cadastroProdutoBean.produto.proValorUni}" style="width: 155px !important">
-                                <p:keyFilter mask="money" />
-                            </p:inputText>
-
                             <h:panelGrid columns="2" cellpadding="0" cellspacing="0">
-                                <h:panelGrid columns="1" cellpadding="0" cellspacing="0" style="width: 80%">
+                                <h:panelGrid columns="1" cellspacing="0">
+                                    <p:outputLabel value="Valor Unitário (R$)" for="vlUni" />
+                                    <p:inputText id="vlUni" value="#{cadastroProdutoBean.produto.proValorUni}">
+                                        <p:keyFilter mask="money" />
+                                    </p:inputText>
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="1" cellspacing="0">
                                     <p:outputLabel value="Desconto (%)" />
                                     <p:inputNumber value="#{cadastroProdutoBean.produto.proPerDesc}" minValue="0" maxValue="100" >
                                         <p:keyFilter mask="money" />
                                     </p:inputNumber>
                                 </h:panelGrid>
 
-                                <h:panelGrid columns="1" cellpadding="0" cellspacing="0" style="width: 80%">
+                                <h:panelGrid columns="1" cellspacing="0">
                                     <p:outputLabel value="Válido de" />
                                     <p:calendar value="#{cadastroProdutoBean.produto.proDescDtIni}" />
+                                </h:panelGrid>
 
+                                <h:panelGrid columns="1" cellspacing="0">
                                     <p:outputLabel value="Válido até" />
                                     <p:calendar value="#{cadastroProdutoBean.produto.proDescDtFin}" />
                                 </h:panelGrid>
                             </h:panelGrid>
                         </p:panelGrid>
                     </p:panelGrid>
-                    <p:panelGrid columns="2" layout="grid">
-                        <p:fileUpload mode="advanced"
-                                      multiple="false"
-                                      sizeLimit="102400" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                      invalidSizeMessage="Maximum file size allowed is 100 KB"
-                                      invalidFileMessage="only gif | jpg | jpeg | png is allowed"
-                                      update=":form1"
-                                      listener="#{cadastroProdutoBean.handleFileUpload}" />
-
-                        <p:carousel value="#{cadastroProdutoBean.produto.fotosProduto}" var="foto"
-                                    numVisible="1" rendered="#{not empty cadastroProdutoBean.produto.fotosProduto}">
-                            <h:graphicImage value="#{foto.imgBase64}" style="height: 200px" />
-                        </p:carousel>
+                    <p:panelGrid columns="1" layout="grid" rendered="#{cadastroProdutoBean.produto ne null}">
+                        <p:fieldset legend="Imagens">
+                            <p:fileUpload mode="advanced"
+                                          auto="true"
+                                          multiple="false"
+                                          label="Adicionar"
+                                          sizeLimit="10983040" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                          invalidSizeMessage="Maximum file size allowed is 10 MB"
+                                          invalidFileMessage="only gif | jpg | jpeg | png is allowed"
+                                          update=":form1" process="@this" styleClass="inputImg"
+                                          listener="#{cadastroProdutoBean.handleFileUpload}" />
+                            <p:carousel value="#{cadastroProdutoBean.imagensProduto}" var="foto"
+                                        numVisible="1">
+                                <h:graphicImage value="#{foto.imgBase64}" style="height: 200px" />
+                                <br />
+                                <p:commandButton icon="pi pi-times" styleClass="btnRemoverImg"
+                                                 actionListener="#{cadastroProdutoBean.removerImagem(foto)}"
+                                                 update=":form1" />
+                            </p:carousel>
+                        </p:fieldset>
                     </p:panelGrid>
                 </p:panelGrid>
                 <f:facet name="footer">
@@ -112,6 +123,7 @@
                     </p:panelGrid>
                     <br />
                     <p:dataTable id="dtProdutos" value="#{cadastroProdutoBean.produtosDisponiveis}" var="produto" selectionMode="single"
+                                 scrollable="true" scrollHeight="250"
                                  selection="#{cadastroProdutoBean.produtoSelecionado}" rowKey="#{produto.proCod}">
                         <p:column headerText="Código">
                             <h:outputText value="#{produto.proCod}" />
@@ -136,7 +148,7 @@
                             </h:outputText>
                         </p:column>
                         <p:column headerText="Desc. Válido">
-                            <h:outputText value="#{produto.proDescDataFormatada}" />
+                            <h:outputText value="#{produto.proDescDtFinFormatada}" />
                         </p:column>
                     </p:dataTable>
                 </p:panel>
@@ -163,6 +175,7 @@
                     </p:panelGrid>
                     <br />
                     <p:dataTable id="dtMarcas" value="#{cadastroMarcaBean.marcasDisponiveis}" var="marca" selectionMode="single"
+                                 scrollable="true" scrollHeight="250"
                                  selection="#{cadastroProdutoBean.marcaSelecionada}" rowKey="#{marca.marCod}">
                         <p:column headerText="Código">
                             <h:outputText value="#{marca.marCod}" />
@@ -194,6 +207,7 @@
                     </p:panelGrid>
                     <br />
                     <p:dataTable id="dtLinhas" value="#{cadastroLinhaBean.linhasDisponiveis}" var="linha" selectionMode="single"
+                                 scrollable="true" scrollHeight="250"
                                  selection="#{cadastroProdutoBean.linhaSelecionada}" rowKey="#{linha.linCod}">
                         <p:column headerText="Código">
                             <h:outputText value="#{linha.linCod}" />

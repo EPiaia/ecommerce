@@ -48,6 +48,7 @@
                     </p:panelGrid>
                     <br />
                     <p:dataTable id="dtLinhas" value="#{cadastroLinhaBean.linhasDisponiveis}" var="linha" selectionMode="single"
+                                 scrollable="true" scrollHeight="250"
                                  selection="#{cadastroLinhaBean.linhaSelecionada}" rowKey="#{linha.linCod}">
                         <p:column headerText="Código">
                             <h:outputText value="#{linha.linCod}" />

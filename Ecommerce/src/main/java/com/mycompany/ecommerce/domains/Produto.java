@@ -1,5 +1,6 @@
 package com.mycompany.ecommerce.domains;
 
+import com.mycompany.ecommerce.utils.ImageUtil;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -166,7 +167,7 @@ public class Produto implements Serializable {
 
     public String getImgPrincipal() {
         if (fotosProduto.isEmpty()) {
-            return "";
+            return ImageUtil.getBase64NoPhoto();
         } else {
             return fotosProduto.get(0).getImgBase64();
         }

@@ -51,6 +51,8 @@ body .ui-panelgrid .ui-panelgrid-cell {
     border-right: none !important;
 }
 
+
+
 /* CUSTOMIZAÇÕES DA TOPBAR */
 .topbar {
     width: 100%;
@@ -119,6 +121,18 @@ body .ui-panelgrid .ui-panelgrid-cell {
 }
 
 
+/* MENU */
+.menu {
+    display: flex;
+    justify-content: center;
+}
+
+.menu > ul {
+    display: flex;
+    justify-content: space-between;
+    max-width: 850px;
+}
+
 /*ESTILOS GERAIS*/
 
 .bold {
@@ -141,6 +155,8 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 .divProduto {
     text-align: center;
+    border: 1px solid #dee2e6;
+    box-shadow: 1px 1px 1px 1px #dee2e6;
 }
 
 .container {
@@ -150,4 +166,28 @@ body .ui-panelgrid .ui-panelgrid-cell {
 
 .content {
     width: 80%;
+}
+
+.padding-left-panelgrid {
+    padding-left: 0px !important;
+}
+
+.ui-carousel-item {
+    text-align: center;
+}
+
+.inputImg {
+    display: inline-block;
+}
+
+.inputImg > .ui-fileupload-buttonbar {
+    border: none !important;
+}
+
+.inputImg > .ui-fileupload-content {
+    border: none !important;
+}
+
+.btnRemoverImg {
+
 }

@@ -29,6 +29,8 @@ public class LoginBean implements Serializable {
 
     @Inject
     private GeralBean gerBean;
+    @Inject
+    private MenuBean menuBean;
 
     private TipoAcessoEnum tipoAcesso = TipoAcessoEnum.ADMIN;
     private String inputLogin;
@@ -47,6 +49,7 @@ public class LoginBean implements Serializable {
         if (usuarios.size() == 1) {
             gerBean.setUsuarioLogado(usuarios.get(0));
             JsfUtil.getSessionMap().put("user", gerBean.getUsuarioLogado());
+            menuBean.montarMenu();
             JsfUtil.redirect("/Ecommerce/index.xhtml");
         } else if (usuarios.size() < 1) {
             JsfUtil.error("Usuário não encontrado com Usuário e Senhas informados");
@@ -56,6 +59,7 @@ public class LoginBean implements Serializable {
     public void sair() {
         gerBean.setUsuarioLogado(gs.getEntityManager().find(Usuario.class, "usuario_publico"));
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        menuBean.montarMenu();
     }
 
     public List<TipoAcessoEnum> getTiposAcessoLogin() {

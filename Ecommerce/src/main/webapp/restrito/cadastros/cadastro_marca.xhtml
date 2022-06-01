@@ -49,6 +49,7 @@
                     </p:panelGrid>
                     <br />
                     <p:dataTable id="dtMarcas" value="#{cadastroMarcaBean.marcasDisponiveis}" var="marca" selectionMode="single"
+                                 scrollable="true" scrollHeight="250"
                                  selection="#{cadastroMarcaBean.marcaSelecionada}" rowKey="#{marca.marCod}">
                         <p:column headerText="Código">
                             <h:outputText value="#{marca.marCod}" />

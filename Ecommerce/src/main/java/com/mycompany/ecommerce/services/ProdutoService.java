@@ -19,7 +19,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @Named
-public class ProdutoService extends BaseService {
+public class ProdutoService extends BaseService<Produto> {
 
     @EJB
     private ProdutoxImagemService pis;
@@ -48,11 +48,6 @@ public class ProdutoService extends BaseService {
             produto.setFotosProduto(pis.getFotosProduto(produto));
         }
         return produtos;
-    }
-
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public Produto save(Produto produto) {
-        return getEntityManager().merge(produto);
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

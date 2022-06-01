@@ -18,7 +18,7 @@ import javax.persistence.Query;
  */
 @Stateless
 @Named
-public class ProdutoxImagemService extends BaseService {
+public class ProdutoxImagemService extends BaseService<ProdutoxImagem> {
 
     @Override
     protected List<FiltrosPesquisa> getFiltros(Map<String, Object> filtros) {
@@ -44,8 +44,9 @@ public class ProdutoxImagemService extends BaseService {
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public ProdutoxImagem save(ProdutoxImagem produtoxImagem) {
-        return getEntityManager().merge(produtoxImagem);
+    public void delete(ProdutoxImagem produtoxImagem) {
+        ProdutoxImagem produtoManaged = getEntityManager().find(ProdutoxImagem.class, produtoxImagem.getProdutoxImagemPK());
+        getEntityManager().remove(produtoManaged);
     }
 
 }
