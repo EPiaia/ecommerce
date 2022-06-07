@@ -67,6 +67,10 @@ public class GeralBean implements Serializable {
         }
     }
 
+    public void redirecionarCarrinho() {
+        JsfUtil.redirect("/Ecommerce/carrinho.xhtml");
+    }
+
     public boolean isTipoAcessoUsuarioPublico() {
         return usuarioLogado.getUsrTpAcesso().equals(1);
     }

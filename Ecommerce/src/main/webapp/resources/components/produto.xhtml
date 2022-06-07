@@ -25,7 +25,12 @@
                 <br />
                 <p:outputLabel value="#{cc.attrs.produto.proValorUni}" />
                 <br />
-                <p:commandButton value="Adicionar ao Carrinho" icon="pi pi-shopping-cart" />
+                <p:commandButton value="Adicionar ao Carrinho" icon="pi pi-shopping-cart" process="@this" update=":form1:dgProdutos :form1:mensagens :formBtnsTopbar"
+                                 actionListener="#{carrinhoBean.adicionarProdutoAoCarrinho(cc.attrs.produto)}"
+                                 rendered="#{geralBean.tipoAcessoCliente and not carrinhoBean.carrinho.isProdutoEstaNoCarrinho(cc.attrs.produto)}" />
+                <p:button value="Adicionar ao Carrinho" icon="pi pi-shopping-cart" outcome="login" rendered="#{geralBean.tipoAcessoUsuarioPublico}" />
+                <p:commandButton value="Adicionado ao Carrinho" icon="pi pi-check"
+                                 rendered="#{carrinhoBean.carrinho.isProdutoEstaNoCarrinho(cc.attrs.produto)}" />
                 <br />
             </p:panelGrid>
         </div>

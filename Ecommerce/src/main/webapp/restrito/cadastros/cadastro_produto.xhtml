@@ -21,22 +21,18 @@
                             <p:inputText id="descricao" value="#{cadastroProdutoBean.produto.proDesc}" maxlength="50" />
 
                             <p:outputLabel value="Marca" for="marca" />
-                            <h:panelGroup style="width: 100%; display: flex">
-                                <p:autoComplete id="marca" value="#{cadastroProdutoBean.produto.proMarca}"
-                                                completeMethod="#{cadastroProdutoBean.completeMarca}" style="margin-right: 10px"
-                                                var="marca" itemLabel="#{marca.marcaLabel}" itemValue="#{marca}"
-                                                converter="#{marcaConverter}" forceSelection="true" scrollHeight="250"/>
-                                <p:commandButton icon="pi pi-search" actionListener="#{cadastroProdutoBean.abrirPesquisaMarca()}" update="formPesquisa" />
-                            </h:panelGroup>
+                            <p:autoComplete id="marca" value="#{cadastroProdutoBean.produto.proMarca}"
+                                            completeMethod="#{cadastroProdutoBean.completeMarca}" style="margin-right: 10px"
+                                            var="marca" itemLabel="#{marca.marcaLabel}" itemValue="#{marca}"
+                                            dropdown="true" placeholder="Pesquisa pelo nome da marca"
+                                            converter="#{marcaConverter}" forceSelection="true" scrollHeight="250"/>
 
                             <p:outputLabel value="Linha" for="linha" />
-                            <h:panelGroup style="width: 100%; display: flex">
-                                <p:autoComplete id="linha" value="#{cadastroProdutoBean.produto.proLinha}"
-                                                completeMethod="#{cadastroProdutoBean.completeLinha}" style="margin-right: 10px"
-                                                var="linha" itemLabel="#{linha.linhaLabel}" itemValue="#{linha}"
-                                                converter="#{linhaConverter}" forceSelection="true" scrollHeight="250"/>
-                                <p:commandButton icon="pi pi-search" actionListener="#{cadastroProdutoBean.abrirPesquisaLinha()}" update="formPesquisa" />
-                            </h:panelGroup>
+                            <p:autoComplete id="linha" value="#{cadastroProdutoBean.produto.proLinha}"
+                                            completeMethod="#{cadastroProdutoBean.completeLinha}" style="margin-right: 10px"
+                                            var="linha" itemLabel="#{linha.linhaLabel}" itemValue="#{linha}" dropdown="true"
+                                            placeholder="Pesquisa pelo nome da linha" converter="#{linhaConverter}"
+                                            forceSelection="true" scrollHeight="250"/>
                         </p:panelGrid>
                         <p:panelGrid columns="1" layout="grid">
                             <p:outputLabel value="Observações" for="observacoes" />
@@ -155,71 +151,6 @@
                 <f:facet name="footer">
                     <p:commandButton value="Confirmar" icon="pi pi-check" actionListener="#{cadastroProdutoBean.selecionarProduto()}" update=":form1" />
                     <p:commandButton value="Fechar" icon="pi pi-times" onclick="PF('wvBuscaProduto').hide()" />
-                </f:facet>
-            </p:dialog>
-
-            <p:dialog id="buscaMarca" widgetVar="wvBuscaMarca" header="Pesquisar Marca" width="750">
-                <p:panel id="panelMarca">
-                    <p:panelGrid id="pgBscMarca" columns="1" layout="grid" styleClass="pgFiltrosPesquisa">
-                        <p:outputLabel value="Código" for="@next" />
-                        <p:inputText value="#{cadastroMarcaBean.filtroMarca.marCod}" styleClass="inputTextCodigo" />
-                        <p:outputLabel value="Descrição" for="@next" />
-                        <p:inputText value="#{cadastroMarcaBean.filtroMarca.marDesc}" />
-                        <f:facet name="footer">
-                            <h:panelGroup>
-                                <p:commandButton value="Pesquisar" icon="pi pi-search" style="margin-right: 10px"
-                                                 actionListener="#{cadastroMarcaBean.pesquisarMarcas()}" update=":formPesquisa:dtMarcas" />
-                                <p:commandButton value="Limpar" icon="pi pi-trash" actionListener="#{cadastroMarcaBean.limparPesquisaMarcas()}" update="pgBscMarca" />
-                            </h:panelGroup>
-                        </f:facet>
-                    </p:panelGrid>
-                    <br />
-                    <p:dataTable id="dtMarcas" value="#{cadastroMarcaBean.marcasDisponiveis}" var="marca" selectionMode="single"
-                                 scrollable="true" scrollHeight="250"
-                                 selection="#{cadastroProdutoBean.marcaSelecionada}" rowKey="#{marca.marCod}">
-                        <p:column headerText="Código">
-                            <h:outputText value="#{marca.marCod}" />
-                        </p:column>
-                        <p:column headerText="Descrição">
-                            <h:outputText value="#{marca.marDesc}" />
-                        </p:column>
-                    </p:dataTable>
-                </p:panel>
-                <f:facet name="footer">
-                    <p:commandButton value="Confirmar" icon="pi pi-check" actionListener="#{cadastroProdutoBean.selecionarMarca()}" update=":form1" />
-                    <p:commandButton value="Fechar" icon="pi pi-times" onclick="PF('wvBuscaMarca').hide()" />
-                </f:facet>
-            </p:dialog>
-
-            <p:dialog id="buscaLinha" widgetVar="wvBuscaLinha" header="Pesquisar Linha" width="750">
-                <p:panel id="panelLinha">
-                    <p:panelGrid id="pgBscLinha" columns="1" layout="grid" styleClass="pgFiltrosPesquisa">
-                        <p:outputLabel value="Código" for="@next" />
-                        <p:inputText value="#{cadastroLinhaBean.filtroLinha.linCod}" styleClass="inputTextCodigo" />
-                        <p:outputLabel value="Descrição" for="@next" />
-                        <p:inputText value="#{cadastroLinhaBean.filtroLinha.linDesc}" />
-                        <f:facet name="footer">
-                            <h:panelGroup>
-                                <p:commandButton value="Pesquisar" icon="pi pi-search" style="margin-right: 10px" actionListener="#{cadastroLinhaBean.pesquisarLinhas()}" update=":formPesquisa:dtLinhas" />
-                                <p:commandButton value="Limpar" icon="pi pi-trash" actionListener="#{cadastroLinhaBean.limparPesquisaLinhas()}" update="pgBscLinha" />
-                            </h:panelGroup>
-                        </f:facet>
-                    </p:panelGrid>
-                    <br />
-                    <p:dataTable id="dtLinhas" value="#{cadastroLinhaBean.linhasDisponiveis}" var="linha" selectionMode="single"
-                                 scrollable="true" scrollHeight="250"
-                                 selection="#{cadastroProdutoBean.linhaSelecionada}" rowKey="#{linha.linCod}">
-                        <p:column headerText="Código">
-                            <h:outputText value="#{linha.linCod}" />
-                        </p:column>
-                        <p:column headerText="Descrição">
-                            <h:outputText value="#{linha.linDesc}" />
-                        </p:column>
-                    </p:dataTable>
-                </p:panel>
-                <f:facet name="footer">
-                    <p:commandButton value="Confirmar" icon="pi pi-check" actionListener="#{cadastroProdutoBean.selecionarLinha()}" update=":form1" />
-                    <p:commandButton value="Fechar" icon="pi pi-times" onclick="PF('wvBuscaLinha').hide()" />
                 </f:facet>
             </p:dialog>
         </h:form>

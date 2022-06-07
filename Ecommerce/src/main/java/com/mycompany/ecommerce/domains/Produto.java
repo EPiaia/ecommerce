@@ -173,6 +173,26 @@ public class Produto implements Serializable {
         }
     }
 
+    public String getItemLabel() {
+        return this.proCod + " - " + this.proDesc;
+    }
+
+    public BigDecimal getDescontoUnitario() {
+        if (this.proPerDesc != null && this.proPerDesc.compareTo(BigDecimal.ZERO) > 0) {
+            return this.proValorUni.multiply(proPerDesc.divide(new BigDecimal(100)));
+        } else {
+            return BigDecimal.ZERO;
+        }
+    }
+
+    public BigDecimal getValorReal() {
+        if (isPossuiDesconto()) {
+            return this.proValorUni.subtract(getDescontoUnitario());
+        } else {
+            return this.proValorUni;
+        }
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

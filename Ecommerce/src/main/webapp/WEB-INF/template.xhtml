@@ -26,13 +26,20 @@
                     <p:menuitem value="Sair" actionListener="#{loginBean.sair()}" ajax="false" />
                 </p:menuButton>
                 <p:button styleClass="btnTopBar btnConta" outcome="login" icon="pi pi-sign-in" rendered="#{geralBean.tipoAcessoUsuarioPublico}" />
-                <p:menuButton buttonStyleClass="btnTopBar btnCarrinho" icon="pi pi-shopping-cart">
-                    <p:menuitem value="Item 1" />
-                    <p:menuitem value="Total" disabled="true" />
-                    <p:menuitem>
-                        <p:button value="ir para o carrinho" />
-                    </p:menuitem>
-                </p:menuButton>
+                <p:badge value="#{carrinhoBean.carrinho.itens.size()}" visible="#{carrinhoBean.carrinho.itens.size() gt 0}" styleClass="badgeCarinho">
+                    <p:commandButton id="btnCarrinho" styleClass="btnTopBar btnCarrinho" icon="pi pi-shopping-cart" rendered="#{not geralBean.tipoAcessoAdmin}" />
+                </p:badge>
+                <p:overlayPanel id="carrinho" for="btnCarrinho">
+                    <p:panel header="Carrinho">
+                        <p:dataGrid value="#{carrinhoBean.carrinho.itens}" var="item" columns="1" emptyMessage="O carrinho está vazio">
+                            <p:panelGrid columns="2" layout="grid">
+                                <h:graphicImage value="#{item.produto.imgPrincipal}" style="height: 120px; width: 120px" />
+                                <p:outputLabel value="#{item.produto.itemLabel}" />
+                            </p:panelGrid>
+                        </p:dataGrid>
+                        <p:commandButton actionListener="#{geralBean.redirecionarCarrinho()}" styleClass="redCarrinho" value="Ir para o Carrinho" />
+                    </p:panel>
+                </p:overlayPanel>
             </h:form>
         </div>
         <h:form id="formMenu">

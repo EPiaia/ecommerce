@@ -28,8 +28,12 @@ public class MenuBean implements Serializable {
 
     @Inject
     private GeralBean geralBean;
+    @Inject
+    private CarrinhoBean carrinhoBean;
 
     private MenuModel menu = new DefaultMenuModel();
+
+    private MenuModel menuCarrinho = new DefaultMenuModel();
 
     @PostConstruct
     public void init() {
@@ -92,12 +96,24 @@ public class MenuBean implements Serializable {
         }
     }
 
+    public void montarMenuCarrinho() {
+        DefaultMenuItem menuItem = new DefaultMenuItem();
+    }
+
     public MenuModel getMenu() {
         return menu;
     }
 
     public void setMenu(MenuModel menu) {
         this.menu = menu;
+    }
+
+    public MenuModel getMenuCarrinho() {
+        return menuCarrinho;
+    }
+
+    public void setMenuCarrinho(MenuModel menuCarrinho) {
+        this.menuCarrinho = menuCarrinho;
     }
 
 }

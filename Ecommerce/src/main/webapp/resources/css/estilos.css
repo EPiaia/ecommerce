@@ -51,6 +51,11 @@ body .ui-panelgrid .ui-panelgrid-cell {
     border-right: none !important;
 }
 
+.ui-autocomplete-dropdown {
+    position: absolute !important;
+    height: 100% !important;
+}
+
 
 
 /* CUSTOMIZAÇÕES DA TOPBAR */
@@ -139,6 +144,20 @@ body .ui-panelgrid .ui-panelgrid-cell {
     font-weight: bold;
 }
 
+.no-pad-sides {
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+}
+
+.width-90px {
+    width: 90px !important;
+}
+
+.inputQtd {
+    width: 90px !important;
+    text-align: center;
+}
+
 .inputTextCodigo {
     width: 100px !important;
 }
@@ -188,6 +207,35 @@ body .ui-panelgrid .ui-panelgrid-cell {
     border: none !important;
 }
 
-.btnRemoverImg {
+.linkCadastrese {
+    text-align: center;
+}
 
+.bold {
+    font-weight: bold;
+}
+
+.font-18 {
+    font-size: 18px !important;
+}
+
+.font-16 {
+    font-size: 16px !important;
+}
+
+.btnRemoverProd {
+    float: right;
+}
+
+.pgItensCarrinho > .ui-panelgrid-content {
+    display: contents;
+}
+
+.redCarrinho {
+    width: 100%;
+}
+
+.badgeCarinho {
+    background-color: #ffffff !important;
+    color: #D95050 !important;
 }

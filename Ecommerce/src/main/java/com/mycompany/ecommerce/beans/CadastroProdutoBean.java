@@ -154,34 +154,6 @@ public class CadastroProdutoBean implements Serializable {
         filtroComDescProd = false;
     }
 
-    public void selecionarMarca() {
-        if (marcaSelecionada == null) {
-            JsfUtil.warn("Selecione um registro");
-            return;
-        }
-        this.produto.setProMarca(marcaSelecionada);
-        JsfUtil.pfHideDialog("wvBuscaMarca");
-    }
-
-    public void abrirPesquisaMarca() {
-        this.marcaSelecionada = new Marca();
-        JsfUtil.pfShowDialog("wvBuscaMarca");
-    }
-
-    public void selecionarLinha() {
-        if (linhaSelecionada == null) {
-            JsfUtil.warn("Selecione um registro");
-            return;
-        }
-        this.produto.setProLinha(linhaSelecionada);
-        JsfUtil.pfHideDialog("wvBuscaLinha");
-    }
-
-    public void abrirPesquisaLinha() {
-        this.linhaSelecionada = new Linha();
-        JsfUtil.pfShowDialog("wvBuscaLinha");
-    }
-
     public List<Marca> completeMarca(String query) {
         String queryLowerCase = query.toLowerCase();
         List<Marca> marcas = ms.getMarcas();

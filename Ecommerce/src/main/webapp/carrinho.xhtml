@@ -1,0 +1,67 @@
+<ui:composition template="/WEB-INF/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:components="http://xmlns.jcp.org/jsf/composite/components"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="title">Carrinho</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:growl id="mensagens" />
+            <div class="container">
+                <div class="content">
+                    <p:wizard nextLabel="Avançar" backLabel="Voltar" >
+                        <p:tab title="Itens">
+                            <p:panel header="Itens">
+                                <p:dataGrid value="#{carrinhoBean.carrinho.itens}" var="item" columns="1" layout="grid" style="dgProdutos">
+                                    <p:commandButton icon="pi pi-times" styleClass="btnRemoverProd"
+                                                     actionListener="#{carrinhoBean.carrinho.removerItem(item)}"
+                                                     process="@this" update=":form1 :formBtnsTopbar" />
+                                    <p:panelGrid columns="3" layout="grid" columnClasses="ui-g-nopad" styleClass="pgItensCarrinho">
+                                        <h:graphicImage value="#{item.produto.imgPrincipal}" style="height: 200px; width: 200px" />
+                                        <p:panelGrid columns="1" layout="grid">
+                                            <p:outputLabel value="#{item.produto.itemLabel}" styleClass="font-18 bold" />
+                                            <br />
+                                            <p:panelGrid columns="3" layout="grid" columnClasses="ui-g-nopad no-pad-sides, width-90px no-pad-sides, no-pad-sides">
+                                                <p:commandButton icon="pi pi-minus" actionListener="#{carrinhoBean.carrinho.diminuirQuantidade(item)}"
+                                                                 update=":form1" process="@this" style="margin-right: 0px !important" />
+                                                <p:inputNumber value="#{item.quantidade}" minValue="1" onclick="this.select()" inputStyleClass="inputQtd">
+                                                    <p:ajax event="blur" process="@this" update=":form1" />
+                                                </p:inputNumber>
+                                                <p:commandButton icon="pi pi-plus" actionListener="#{carrinhoBean.carrinho.aumentarQuantidade(item)}"
+                                                                 update=":form1" process="@this" />
+                                            </p:panelGrid>
+                                        </p:panelGrid>
+                                        <p:panelGrid columns="2" layout="grid" columnClasses="ui-g-nopad">
+                                            <p:outputLabel value="Valor Unitário: " styleClass="bold font-16" />
+                                            <p:outputLabel value="R$ #{item.produto.proValorUni}" styleClass="font-16" />
+                                            <p:outputLabel value="Desconto Unitário: " styleClass="bold font-16" rendered="#{item.produto.possuiDesconto}" />
+                                            <p:outputLabel value="R$ #{item.produto.descontoUnitario}" rendered="#{item.produto.possuiDesconto}" styleClass="font-16" />
+                                            <p:outputLabel value="Quantidade: " styleClass="bold font-16" />
+                                            <p:outputLabel value="#{item.quantidade}" styleClass="font-16" />
+                                            <p:outputLabel value="Desconto Total: " styleClass="bold font-16" rendered="#{item.produto.possuiDesconto}" />
+                                            <p:outputLabel value="R$ #{item.descontoTotal}" rendered="#{item.produto.possuiDesconto}" styleClass="font-16" />
+                                            <p:outputLabel value="Valor Total: " styleClass="bold font-16" />
+                                            <p:outputLabel value="R$ #{item.valorTotal}" styleClass="font-16" />
+                                        </p:panelGrid>
+                                    </p:panelGrid>
+                                </p:dataGrid>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab title="Endereço de Entrega">
+                            <p:panel></p:panel>
+                        </p:tab>
+                        <p:tab title="Forma de Pagamento">
+                            <p:panel></p:panel>
+                        </p:tab>
+                        <p:tab title="Revisar Pedido">
+                            <p:panel></p:panel>
+                        </p:tab>
+                    </p:wizard>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

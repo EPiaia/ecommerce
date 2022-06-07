@@ -8,6 +8,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
+        <style>
+            div ~ a {
+                text-align: center;
+            }
+        </style>
         <h:outputStylesheet library="css" name="estilos.css"  />
         <h:outputStylesheet library="css" name="estiloLogin.css"  />
         <div class="divBody">
@@ -33,6 +38,10 @@
                         <h:panelGrid columns="1" cellpadding="0" cellspacing="0" styleClass="padPg pgWidth">
                             <p:commandButton value="Login" actionListener="#{loginBean.autenticar()}" styleClass="btnLogin" process=":form1" update=":form1" />
                         </h:panelGrid>
+                    </p:panelGrid>
+                    <p:panelGrid columns="1" layout="grid" columnClasses="linkCadastrese">
+                        <h:link value="Cadastre-se" outcome="cadastro_cliente" />
+                        <br />
                     </p:panelGrid>
                 </div>
             </h:form>

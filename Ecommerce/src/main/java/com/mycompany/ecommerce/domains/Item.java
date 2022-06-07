@@ -40,6 +40,14 @@ public class Item implements Serializable {
         this.quantidade = quantidade;
     }
 
+    public BigDecimal getValorTotal() {
+        return this.produto.getValorReal().multiply(quantidade);
+    }
+
+    public BigDecimal getDescontoTotal() {
+        return this.produto.getDescontoUnitario().multiply(quantidade);
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

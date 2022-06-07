@@ -4,7 +4,10 @@
  */
 package com.mycompany.ecommerce.domains;
 
+import com.mycompany.ecommerce.utils.JsfUtil;
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +17,7 @@ import java.util.Objects;
  */
 public class Carrinho implements Serializable {
 
-    private List<Item> itens;
+    private List<Item> itens = new ArrayList<>();
 
     public Carrinho() {
     }
@@ -25,6 +28,40 @@ public class Carrinho implements Serializable {
 
     public void setItens(List<Item> itens) {
         this.itens = itens;
+    }
+
+    public boolean isProdutoEstaNoCarrinho(Produto produto) {
+        for (Item item : getItens()) {
+            if (item.getProduto().equals(produto)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removerItem(Item item) {
+        this.itens.remove(item);
+        JsfUtil.info("Produto removido com sucesso");
+    }
+
+    public void aumentarQuantidade(Item item) {
+        for (Item itemCarrinho : itens) {
+            if (itemCarrinho.equals(item)) {
+                itemCarrinho.setQuantidade(itemCarrinho.getQuantidade().add(BigDecimal.ONE));
+            }
+        }
+    }
+
+    public void diminuirQuantidade(Item item) {
+        for (Item itemCarrinho : itens) {
+            if (itemCarrinho.equals(item)) {
+                if (itemCarrinho.getQuantidade().compareTo(BigDecimal.ONE) == 0) {
+                    JsfUtil.warn("A quantidade mínima é 1");
+                } else {
+                    itemCarrinho.setQuantidade(itemCarrinho.getQuantidade().subtract(BigDecimal.ONE));
+                }
+            }
+        }
     }
 
     @Override
