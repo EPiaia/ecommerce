@@ -25,14 +25,14 @@
                                             completeMethod="#{cadastroProdutoBean.completeMarca}" style="margin-right: 10px"
                                             var="marca" itemLabel="#{marca.marcaLabel}" itemValue="#{marca}"
                                             dropdown="true" placeholder="Pesquisa pelo nome da marca"
-                                            converter="#{marcaConverter}" forceSelection="true" scrollHeight="250"/>
+                                            converter="#{marcaConverter}" forceSelection="true" scrollHeight="250" />
 
                             <p:outputLabel value="Linha" for="linha" />
                             <p:autoComplete id="linha" value="#{cadastroProdutoBean.produto.proLinha}"
                                             completeMethod="#{cadastroProdutoBean.completeLinha}" style="margin-right: 10px"
                                             var="linha" itemLabel="#{linha.linhaLabel}" itemValue="#{linha}" dropdown="true"
                                             placeholder="Pesquisa pelo nome da linha" converter="#{linhaConverter}"
-                                            forceSelection="true" scrollHeight="250"/>
+                                            forceSelection="true" scrollHeight="250" />
                         </p:panelGrid>
                         <p:panelGrid columns="1" layout="grid">
                             <p:outputLabel value="Observações" for="observacoes" />
@@ -41,16 +41,12 @@
                             <h:panelGrid columns="2" cellpadding="0" cellspacing="0">
                                 <h:panelGrid columns="1" cellspacing="0">
                                     <p:outputLabel value="Valor Unitário (R$)" for="vlUni" />
-                                    <p:inputText id="vlUni" value="#{cadastroProdutoBean.produto.proValorUni}">
-                                        <p:keyFilter mask="money" />
-                                    </p:inputText>
+                                    <p:inputNumber id="vlUni" value="#{cadastroProdutoBean.produto.proValorUni}" decimalPlaces="2" minValue="0" symbol="R$ " />
                                 </h:panelGrid>
 
                                 <h:panelGrid columns="1" cellspacing="0">
                                     <p:outputLabel value="Desconto (%)" />
-                                    <p:inputNumber value="#{cadastroProdutoBean.produto.proPerDesc}" minValue="0" maxValue="100" >
-                                        <p:keyFilter mask="money" />
-                                    </p:inputNumber>
+                                    <p:inputNumber value="#{cadastroProdutoBean.produto.proPerDesc}" minValue="0" maxValue="100" symbol="%" symbolPosition="s" />
                                 </h:panelGrid>
 
                                 <h:panelGrid columns="1" cellspacing="0">
@@ -90,7 +86,7 @@
                 <f:facet name="footer">
                     <p:commandButton value="Novo" icon="pi pi-plus" actionListener="#{cadastroProdutoBean.criarNovo()}" update=":form1" />
                     <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{cadastroProdutoBean.salvar()}" update=":form1" />
-                    <p:commandButton value="Procurar" icon="pi pi-search" actionListener="#{cadastroProdutoBean.abrirPesquisaProdutos()}" update=":formPesquisa" />
+                    <p:commandButton value="Procurar" icon="pi pi-search" actionListener="#{cadastroProdutoBean.abrirPesquisaProdutos()}" update=":formPesquisa" process="@this" />
                     <p:commandButton value="Deletar" icon="pi pi-trash" actionListener="#{cadastroProdutoBean.deletar()}" update=":form1" />
                 </f:facet>
             </p:panel>

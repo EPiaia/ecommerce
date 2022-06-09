@@ -73,8 +73,8 @@ public class CadastroMarcaBean implements Serializable {
     }
 
     public void abrirPesquisaMarca() {
-        pesquisarMarcas();
         this.filtroMarca = new Marca();
+        pesquisarMarcas();
         JsfUtil.pfShowDialog("wvBuscaMarca");
     }
 

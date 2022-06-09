@@ -47,11 +47,21 @@
                                             <p:outputLabel value="R$ #{item.valorTotal}" styleClass="font-16" />
                                         </p:panelGrid>
                                     </p:panelGrid>
+                                    <p:divider />
                                 </p:dataGrid>
                             </p:panel>
                         </p:tab>
                         <p:tab title="Endereço de Entrega">
-                            <p:panel></p:panel>
+                            <p:panel header="Endereço de Entrega">
+                                <p:panelGrid columns="2" layout="grid">
+                                    <p:panelGrid columns="1" layout="grid">
+                                        <p:outputLabel value="Endereço para Entrega" />
+                                        <p:selectOneMenu value="">
+
+                                        </p:selectOneMenu>
+                                    </p:panelGrid>
+                                </p:panelGrid>
+                            </p:panel>
                         </p:tab>
                         <p:tab title="Forma de Pagamento">
                             <p:panel></p:panel>

@@ -28,8 +28,8 @@ public class LinhaService extends BaseService<Linha> {
     }
 
     public List<Linha> getLinhas() {
-        Query query = getEntityManager().createQuery("SELECT l FROM Linha l");
-        return query.getResultList();
+        String query = "SELECT L.* FROM LINHA L";
+        return super.executeNativeQuery(Linha.class, query);
     }
 
     public Linha getLinhaPorCodigo(int codigo) {

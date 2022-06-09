@@ -174,7 +174,7 @@ public class Produto implements Serializable {
     }
 
     public String getItemLabel() {
-        return this.proCod + " - " + this.proDesc;
+        return this.proCod + " - " + this.proDesc + " (" + this.proMarca.getMarDesc() + ")";
     }
 
     public BigDecimal getDescontoUnitario() {

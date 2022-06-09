@@ -59,6 +59,11 @@ public abstract class BaseService<T> {
         getEntityManager().remove(objectManaged);
     }
 
+    public void executeNativeUpdate(String query) {
+        Query q = em.createNativeQuery(query);
+        q.executeUpdate();
+    }
+
     public List<Object> executeNativeQuery(String query) {
         Query q = em.createNativeQuery(query);
         return q.getResultList();

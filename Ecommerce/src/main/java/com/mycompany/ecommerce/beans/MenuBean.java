@@ -28,8 +28,6 @@ public class MenuBean implements Serializable {
 
     @Inject
     private GeralBean geralBean;
-    @Inject
-    private CarrinhoBean carrinhoBean;
 
     private MenuModel menu = new DefaultMenuModel();
 
@@ -43,11 +41,18 @@ public class MenuBean implements Serializable {
     public void montarMenu() {
         this.menu = new DefaultMenuModel();
         if (geralBean.isTipoAcessoAdmin()) {
-            DefaultSubMenu subMenuCadastros = criarSubMenu("Cadastros", "pi pi-plus");
             List<DefaultMenuItem> itensSubMenu = new ArrayList<>();
+            itensSubMenu.add(criarMenuItem("Configurações", "/Ecommerce/restrito/configuracoes.xhtml", "pi pi-cog"));
+            addElements(null, itensSubMenu);
+            itensSubMenu.clear();
+            DefaultSubMenu subMenuCadastros = criarSubMenu("Cadastros", "pi pi-plus");
             itensSubMenu.add(criarMenuItem("Produtos", "/Ecommerce/restrito/cadastros/cadastro_produto.xhtml"));
             itensSubMenu.add(criarMenuItem("Marcas", "/Ecommerce/restrito/cadastros/cadastro_marca.xhtml"));
             itensSubMenu.add(criarMenuItem("Linhas", "/Ecommerce/restrito/cadastros/cadastro_linha.xhtml"));
+            itensSubMenu.add(criarMenuItem("Países", "/Ecommerce/restrito/cadastros/cadastro_pais.xhtml"));
+            itensSubMenu.add(criarMenuItem("Estados", "/Ecommerce/restrito/cadastros/cadastro_estado.xhtml"));
+            itensSubMenu.add(criarMenuItem("Cidades", "/Ecommerce/restrito/cadastros/cadastro_cidade.xhtml"));
+            itensSubMenu.add(criarMenuItem("Formas de Pagamento", "/Ecommerce/restrito/cadastros/cadastro_formapag.xhtml"));
             addElements(subMenuCadastros, itensSubMenu);
         } else if (geralBean.isTipoAcessoCliente() || geralBean.isTipoAcessoUsuarioPublico()) {
             List<Linha> linhas = linhaService.getLinhas();
@@ -84,6 +89,14 @@ public class MenuBean implements Serializable {
         DefaultMenuItem menuItem = new DefaultMenuItem();
         menuItem.setValue(label);
         menuItem.setUrl(url);
+        return menuItem;
+    }
+
+    private DefaultMenuItem criarMenuItem(String label, String url, String icon) {
+        DefaultMenuItem menuItem = new DefaultMenuItem();
+        menuItem.setValue(label);
+        menuItem.setUrl(url);
+        menuItem.setIcon(icon);
         return menuItem;
     }
 

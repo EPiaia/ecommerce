@@ -1,6 +1,7 @@
 package com.mycompany.ecommerce.services;
 
 import com.mycompany.ecommerce.domains.Marca;
+import com.mycompany.ecommerce.domains.Pais;
 import com.mycompany.ecommerce.utils.FiltrosPesquisa;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,35 +18,36 @@ import javax.persistence.Query;
  */
 @Stateless
 @Named
-public class MarcaService extends BaseService<Marca> {
+public class PaisService extends BaseService<Pais> {
 
     @Override
     protected List<FiltrosPesquisa> getFiltros(Map<String, Object> filtros) {
         List<FiltrosPesquisa> fp = new ArrayList<>();
-        add(fp, "m.marCod = ?marCod", "marCod", filtros.get("marCod"));
-        add(fp, "UPPER(m.marDesc) LIKE UPPER('%?marDesc%')", "marDesc", filtros.get("marDesc"));
+        add(fp, "p.paisCod = ?paisCod", "paisCod", filtros.get("paisCod"));
+        add(fp, "UPPER(p.paisDesc) LIKE UPPER('%?paisDesc%')", "paisDesc", filtros.get("paisDesc"));
         return fp;
     }
 
-    public List<Marca> getMarcas() {
-        String query = "SELECT M.* FROM MARCA M";
-        return super.executeNativeQuery(Marca.class, query);
+    public List<Pais> getPaises() {
+        String query = "SELECT P.* FROM PAIS P";
+        return super.executeNativeQuery(Pais.class, query);
     }
 
-    public Marca getMarcaPorCodigo(int codigo) {
-        return getEntityManager().find(Marca.class, codigo);
-    }
-
-    public List<Marca> filtrar(Map<String, Object> filtros) {
-        String sql = "SELECT m FROM Marca m";
+    public List<Pais> filtrar(Map<String, Object> filtros) {
+        String sql = "SELECT p FROM Pais p";
         sql = adicionarFiltros(sql, getFiltros(filtros));
         Query query = getEntityManager().createQuery(sql);
         return query.getResultList();
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void delete(Marca marca) {
-        Marca marcaManaged = getEntityManager().find(Marca.class, marca.getMarCod());
-        getEntityManager().remove(marcaManaged);
+    public Pais getPaisPorCodigo(int codigo) {
+        return getEntityManager().find(Pais.class, codigo);
     }
+
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void delete(Pais pais) {
+        String sql = "DELETE FROM PAIS WHERE PAIS_COD = " + pais.getPaisCod();
+        super.executeNativeUpdate(sql);
+    }
+
 }

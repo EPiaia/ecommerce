@@ -71,8 +71,8 @@ public class CadastroLinhaBean implements Serializable {
     }
 
     public void abrirPesquisaLinha() {
-        pesquisarLinhas();
         this.filtroLinha = new Linha();
+        pesquisarLinhas();
         JsfUtil.pfShowDialog("wvBuscaLinha");
     }
 
