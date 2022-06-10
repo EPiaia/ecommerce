@@ -5,12 +5,12 @@
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <ui:define name="title">Cadastrar País</ui:define>
+    <ui:define name="title">Cadastrar Estado</ui:define>
 
     <ui:define name="content">
         <h:form id="form1">
             <p:growl id="mensagens" />
-            <p:panel header="Informações Gerais" styleClass="panelGeral">
+            <p:panel header="Cadastro de Estados" styleClass="panelGeral">
                 <p:panelGrid columns="2" layout="grid">
                     <p:panelGrid columns="2" layout="grid">
                         <p:panelGrid id="pgEstado" columns="1" layout="grid">
@@ -18,10 +18,10 @@
                             <p:inputText id="codEstado" value="#{cadastroEstadoBean.estado.estCod}" disabled="true" styleClass="inputTextCodigo" />
 
                             <p:outputLabel value="Descrição" for="ipEstado" />
-                            <p:inputText id="ipEstado" value="#{cadastroEstadoBean.estado.estDesc}" maxlength="50" />
+                            <p:inputText id="ipEstado" value="#{cadastroEstadoBean.estado.estDesc}" maxlength="50" required="true" />
 
                             <p:outputLabel value="País" for="pais" />
-                            <p:autoComplete id="pais" value="#{cadastroEstadoBean.estado.estPais}"
+                            <p:autoComplete id="pais" value="#{cadastroEstadoBean.estado.estPais}" required="true"
                                             completeMethod="#{cadastroEstadoBean.completePais}" style="margin-right: 10px"
                                             var="pais" itemLabel="#{pais.paisLabel}" itemValue="#{pais}"
                                             dropdown="true" placeholder="Pesquise pelo nome do país"
@@ -60,6 +60,9 @@
                         </p:column>
                         <p:column headerText="Descrição">
                             <h:outputText value="#{estado.estDesc}" />
+                        </p:column>
+                        <p:column headerText="País">
+                            <h:outputText value="#{estado.estPais.paisDesc}" />
                         </p:column>
                     </p:dataTable>
                 </p:panel>

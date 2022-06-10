@@ -40,6 +40,16 @@ public class EstadoService extends BaseService<Estado> {
         return query.getResultList();
     }
 
+    public Estado getEstadoPorCodigo(int codigo) {
+        String sql = "SELECT E.* FROM ESTADO E WHERE E.EST_COD = " + codigo;
+        List<Estado> estados = executeNativeQuery(Estado.class, sql);
+        if (estados.isEmpty()) {
+            return null;
+        } else {
+            return estados.get(0);
+        }
+    }
+
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void delete(Estado estado) {
         String sql = "DELETE FROM Estado WHERE EST_COD = " + estado.getEstCod();

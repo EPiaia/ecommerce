@@ -58,6 +58,10 @@ public class Estado implements Serializable {
         this.estPais = estPais;
     }
 
+    public String getEstadoLabel() {
+        return this.estCod + " - " + this.estDesc + " (" + this.estPais.getPaisDesc() + ")";
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
