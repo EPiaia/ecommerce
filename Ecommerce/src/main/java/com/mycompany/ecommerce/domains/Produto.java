@@ -15,10 +15,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 /**
  *
@@ -52,7 +52,7 @@ public class Produto implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "PRO_DESC_DTFIN")
     private Date proDescDtFin;
-    @Transient
+    @OneToMany(mappedBy = "pxiProduto", fetch = FetchType.LAZY)
     private List<ProdutoxImagem> fotosProduto = new ArrayList<>();
 
     public Produto() {
@@ -156,6 +156,14 @@ public class Produto implements Serializable {
         }
     }
 
+    public String getPercDescFormatado() {
+        if (this.proPerDesc == null) {
+            return "0,00%";
+        } else {
+            return String.format("%.2f%%", this.proPerDesc);
+        }
+    }
+
     public boolean isDescontoValido() {
         Date hoje = new Date();
         return (proDescDtIni != null && hoje.after(proDescDtIni) && (proDescDtFin == null || hoje.before(proDescDtFin)));
@@ -167,7 +175,7 @@ public class Produto implements Serializable {
 
     public String getImgPrincipal() {
         if (fotosProduto.isEmpty()) {
-            return ImageUtil.getBase64NoPhoto();
+            return ImageUtil.getNoPhoto();
         } else {
             return fotosProduto.get(0).getImgBase64();
         }

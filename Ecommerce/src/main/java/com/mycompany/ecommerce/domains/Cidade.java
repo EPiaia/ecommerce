@@ -58,6 +58,10 @@ public class Cidade implements Serializable {
         this.cidEstado = cidEstado;
     }
 
+    public String getNomeCidade() {
+        return this.cidDesc + " - " + this.cidEstado.getEstDesc() + " (" + this.cidEstado.getEstPais().getPaisDesc() + ")";
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

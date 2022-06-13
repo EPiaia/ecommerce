@@ -71,4 +71,13 @@ public class JsfUtil implements Serializable {
         pf.executeScript("PF('" + widgetVar + "').hide();");
     }
 
+    public static String getParamFromUrl(String param) {
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        return request.getParameter(param);
+    }
+
+    public static void pfUpdate(String id) {
+        pf.ajax().update(id);
+    }
+
 }

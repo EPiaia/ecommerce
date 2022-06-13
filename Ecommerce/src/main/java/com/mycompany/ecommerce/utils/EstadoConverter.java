@@ -2,13 +2,13 @@ package com.mycompany.ecommerce.utils;
 
 import com.mycompany.ecommerce.domains.Estado;
 import com.mycompany.ecommerce.services.EstadoService;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -19,7 +19,7 @@ import javax.inject.Named;
 @FacesConverter(value = "estadoConverter", managed = true)
 public class EstadoConverter implements Converter<Estado> {
 
-    @Inject
+    @EJB
     private EstadoService estadoService;
 
     @Override
@@ -28,7 +28,7 @@ public class EstadoConverter implements Converter<Estado> {
             try {
                 return estadoService.getEstadoPorCodigo(Integer.parseInt(value));
             } catch (NumberFormatException e) {
-                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de conversão", "Não é um país válido."));
+                throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro de conversão", "Não é um estado válido."));
             }
         } else {
             return null;

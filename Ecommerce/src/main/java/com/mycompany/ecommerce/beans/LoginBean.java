@@ -1,6 +1,8 @@
 package com.mycompany.ecommerce.beans;
 
+import com.mycompany.ecommerce.domains.Cliente;
 import com.mycompany.ecommerce.domains.Usuario;
+import com.mycompany.ecommerce.services.ClienteService;
 import com.mycompany.ecommerce.services.GeralService;
 import com.mycompany.ecommerce.utils.JsfUtil;
 import com.mycompany.ecommerce.utils.StringUtil;
@@ -26,11 +28,15 @@ public class LoginBean implements Serializable {
 
     @EJB
     private GeralService gs;
+    @EJB
+    private ClienteService cs;
 
     @Inject
     private GeralBean gerBean;
     @Inject
     private MenuBean menuBean;
+    @Inject
+    private CarrinhoBean carrinhoBean;
 
     private TipoAcessoEnum tipoAcesso = TipoAcessoEnum.ADMIN;
     private String inputLogin;
@@ -49,6 +55,10 @@ public class LoginBean implements Serializable {
         if (usuarios.size() == 1) {
             gerBean.setUsuarioLogado(usuarios.get(0));
             JsfUtil.getSessionMap().put("user", gerBean.getUsuarioLogado());
+            if (tipoAcesso.equals(TipoAcessoEnum.CLIENTE)) {
+                buscarCliente();
+                carrinhoBean.inicializarCarrinho();
+            }
             menuBean.montarMenu();
             JsfUtil.redirect("/Ecommerce/index.xhtml");
         } else if (usuarios.size() < 1) {
@@ -60,6 +70,15 @@ public class LoginBean implements Serializable {
         gerBean.setUsuarioLogado(gs.getEntityManager().find(Usuario.class, "usuario_publico"));
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         menuBean.montarMenu();
+    }
+
+    public void buscarCliente() {
+        Cliente cliente = cs.getClientePorUsuario(inputLogin);
+        if (cliente == null) {
+            sair();
+        } else {
+            gerBean.setClienteLogado(cliente);
+        }
     }
 
     public List<TipoAcessoEnum> getTiposAcessoLogin() {

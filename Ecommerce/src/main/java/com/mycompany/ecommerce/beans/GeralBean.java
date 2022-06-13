@@ -1,5 +1,6 @@
 package com.mycompany.ecommerce.beans;
 
+import com.mycompany.ecommerce.domains.Cliente;
 import com.mycompany.ecommerce.domains.PaginaxAcesso;
 import com.mycompany.ecommerce.domains.Usuario;
 import com.mycompany.ecommerce.services.GeralService;
@@ -28,6 +29,7 @@ public class GeralBean implements Serializable {
     private GeralService gs;
 
     private Usuario usuarioLogado;
+    private Cliente clienteLogado;
     private Map<String, List<TipoAcessoEnum>> paginasxPermissao = new HashMap<>();
 
     @PostConstruct
@@ -89,5 +91,13 @@ public class GeralBean implements Serializable {
 
     public void setUsuarioLogado(Usuario usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
+    }
+
+    public Cliente getClienteLogado() {
+        return clienteLogado;
+    }
+
+    public void setClienteLogado(Cliente clienteLogado) {
+        this.clienteLogado = clienteLogado;
     }
 }

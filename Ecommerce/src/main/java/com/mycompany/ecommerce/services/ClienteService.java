@@ -22,4 +22,13 @@ public class ClienteService extends BaseService<Cliente> {
         return fp;
     }
 
+    public Cliente getClientePorUsuario(String usuario) {
+        String sql = "SELECT CLI.* FROM CLIENTE CLI WHERE CLI_USUARIO = '" + usuario + "'";
+        List<Cliente> retorno = executeNativeQuery(Cliente.class, sql);
+        if (retorno.isEmpty()) {
+            return null;
+        } else {
+            return retorno.get(0);
+        }
+    }
 }

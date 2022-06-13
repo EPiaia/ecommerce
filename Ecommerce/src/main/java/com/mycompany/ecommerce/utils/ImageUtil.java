@@ -1,6 +1,7 @@
 package com.mycompany.ecommerce.utils;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 /**
  *
@@ -9,7 +10,7 @@ import java.io.Serializable;
 public class ImageUtil implements Serializable {
 
     public static String getBase64NoPhoto() {
-        return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbS"
+        return "iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbS"
                 + "JIAAAAY1BMVEX///9oaGhjY2NeXl5hYWFaWlrOzs5fX19YWFienp55eXnk5OT"
                 + "7+/uDg4OTk5P19fWfn5+/v7/q6urU1NSNjY23t7fIyMjc3NympqZra2uvr6+Q"
                 + "kJCGhoa5ublzc3PZ2dlQUFC1P+9nAAAOHklEQVR4nO1d6dKquhLdZhBBBhVRn"
@@ -92,6 +93,14 @@ public class ImageUtil implements Serializable {
                 + "zzzydMwPlDGxOil6NkxTpyd2S9iXWUOh2Ke/l0VOP7zgGN1eTplxp3HlhzZV+"
                 + "hj5j+H4nHbZM9LyxiTGnSzxpHjnGXxrfw1uzcErZu9reo4z/f763W/z+P6vD0"
                 + "8dj9p82bMmDFjxowZM2bMmDFjxoz/T/wPcKqtaCSHCKsAAAAASUVORK5CYII=";
+    }
+
+    public static String getNoPhoto() {
+        return "data:image/png;base64," + getBase64NoPhoto();
+    }
+
+    public static byte[] getByteNoPhoto() {
+        return Base64.getDecoder().decode(getBase64NoPhoto());
     }
 
 }

@@ -15,16 +15,40 @@
     <composite:implementation>
 
         <div class="divProduto">
+            <h:panelGroup rendered="#{cc.attrs.produto.descontoValido}">
+                <div style="position: relative">
+                    <div style="position: absolute; width: 100%" class="divPromo">
+                        <h:outputText value="#{cc.attrs.produto.percDescFormatado} de desconto" />
+                    </div>
+                </div>
+            </h:panelGroup>
             <p:panelGrid columns="1" layout="grid">
-                <br />
-                <h:graphicImage value="#{cc.attrs.produto.imgPrincipal}" style="height: 200px; width: 200px" />
-                <p:divider align="center">
-                    <p:outputLabel value="#{cc.attrs.produto.proCod}" styleClass="bold" />
-                </p:divider>
-                <p:outputLabel value="#{cc.attrs.produto.proDesc}" />
-                <br />
-                <p:outputLabel value="#{cc.attrs.produto.proValorUni}" />
-                <br />
+                <p:link href="/Ecommerce/produto.xhtml?produto=#{cc.attrs.produto.proCod}" styleClass="styleLink">
+                    <br />
+                    <h:graphicImage value="#{cc.attrs.produto.imgPrincipal}" style="height: 200px; width: 200px" />
+                    <p:divider align="center">
+                        <p:outputLabel value="#{cc.attrs.produto.proCod}" styleClass="bold" />
+                    </p:divider>
+                    <p:outputLabel value="#{cc.attrs.produto.proDesc}" />
+                    <br />
+                    <h:panelGroup rendered="#{not cc.attrs.produto.descontoValido}">
+                        <h:outputText value="#{cc.attrs.produto.valorReal}">
+                            <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                        </h:outputText>
+                        <br />
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{cc.attrs.produto.descontoValido}">
+                        <h:outputText value="#{cc.attrs.produto.proValorUni}" styleClass="valorPromo">
+                            <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                        </h:outputText>
+                        <br />
+                        <h:outputText value="#{cc.attrs.produto.valorReal}">
+                            <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                        </h:outputText>
+                    </h:panelGroup>
+                    <br />
+                    <br />
+                </p:link>
                 <p:commandButton value="Adicionar ao Carrinho" icon="pi pi-shopping-cart" process="@this" update=":form1:dgProdutos :form1:mensagens :formBtnsTopbar"
                                  actionListener="#{carrinhoBean.adicionarProdutoAoCarrinho(cc.attrs.produto)}"
                                  rendered="#{geralBean.tipoAcessoCliente and not carrinhoBean.carrinho.isProdutoEstaNoCarrinho(cc.attrs.produto)}" />

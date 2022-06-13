@@ -35,9 +35,13 @@ public class Endereco implements Serializable {
     private String endRua;
     @NotNull
     @Column(name = "END_NUM")
-    private String endNum;
+    private Integer endNum;
     @Column(name = "END_COMPL")
     private String endCompl;
+    @NotNull
+    @JoinColumn(name = "END_CLIENTE", referencedColumnName = "CLI_COD")
+    @ManyToOne
+    private Cliente endCliente;
 
     public Endereco() {
     }
@@ -74,11 +78,11 @@ public class Endereco implements Serializable {
         this.endRua = endRua;
     }
 
-    public String getEndNum() {
+    public Integer getEndNum() {
         return endNum;
     }
 
-    public void setEndNum(String endNum) {
+    public void setEndNum(Integer endNum) {
         this.endNum = endNum;
     }
 
@@ -88,6 +92,18 @@ public class Endereco implements Serializable {
 
     public void setEndCompl(String endCompl) {
         this.endCompl = endCompl;
+    }
+
+    public Cliente getEndCliente() {
+        return endCliente;
+    }
+
+    public void setEndCliente(Cliente endCliente) {
+        this.endCliente = endCliente;
+    }
+
+    public String getEnderecoLabel() {
+        return this.endRua + ", " + this.endNum + " (" + this.endBairro + ")";
     }
 
     @Override

@@ -2,13 +2,13 @@ package com.mycompany.ecommerce.utils;
 
 import com.mycompany.ecommerce.domains.Marca;
 import com.mycompany.ecommerce.services.MarcaService;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -19,7 +19,7 @@ import javax.inject.Named;
 @FacesConverter(value = "marcaConverter", managed = true)
 public class MarcaConverter implements Converter<Marca> {
 
-    @Inject
+    @EJB
     private MarcaService marcaService;
 
     @Override

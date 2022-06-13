@@ -32,6 +32,16 @@ public class CidadeService extends BaseService<Cidade> {
         return super.executeNativeQuery(Cidade.class, query);
     }
 
+    public Cidade getCidadePorCodigo(Integer codigo) {
+        String sql = "SELECT C.* FROM CIDADE C WHERE C.CID_COD = " + codigo;
+        List<Cidade> retorno = executeNativeQuery(Cidade.class, sql);
+        if (retorno.isEmpty()) {
+            return null;
+        } else {
+            return retorno.get(0);
+        }
+    }
+
     public List<Cidade> filtrar(Map<String, Object> filtros) {
         String sql = "SELECT c FROM Cidade c";
         sql = adicionarFiltros(sql, getFiltros(filtros));

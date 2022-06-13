@@ -1,15 +1,12 @@
 package com.mycompany.ecommerce.domains;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -42,8 +39,6 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "CLI_USUARIO", referencedColumnName = "USR_LOGIN")
     @OneToOne
     private Usuario cliUsuario;
-    @OneToMany(mappedBy = "cxeCliente", fetch = FetchType.LAZY)
-    private List<ClixEnd> cliEnderecos;
 
     public Cliente() {
     }
@@ -94,14 +89,6 @@ public class Cliente implements Serializable {
 
     public void setCliUsuario(Usuario cliUsuario) {
         this.cliUsuario = cliUsuario;
-    }
-
-    public List<ClixEnd> getCliEnderecos() {
-        return cliEnderecos;
-    }
-
-    public void setCliEnderecos(List<ClixEnd> cliEnderecos) {
-        this.cliEnderecos = cliEnderecos;
     }
 
     @Override

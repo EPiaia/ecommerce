@@ -50,6 +50,32 @@ public class ProdutoService extends BaseService<Produto> {
         return produtos;
     }
 
+    public List<Produto> pesquisarProdutos(Map<String, String> filtros) {
+        boolean isDesc = filtros.containsKey("desc") && filtros.get("desc") != null;
+        boolean isLinha = filtros.containsKey("linha") && filtros.get("linha") != null;
+        boolean isMarca = filtros.containsKey("marca") && filtros.get("marca") != null;
+        String sql = "SELECT P.* FROM PRODUTO P ";
+        if (isDesc) {
+            String desc = filtros.get("desc");
+            sql += " INNER JOIN MARCA M ON M.MAR_COD = P.PRO_MARCA "
+                    + " INNER JOIN LINHA L ON L.LIN_COD = P.PRO_LINHA "
+                    + " WHERE P.PRO_DESC LIKE '%" + desc + "%' "
+                    + " OR M.MAR_DESC LIKE '%" + desc + "%' "
+                    + " OR L.LIN_DESC LIKE '%" + desc + "%'";
+        } else if (isLinha) {
+            String linha = filtros.get("linha");
+            sql += " INNER JOIN LINHA L ON L.LIN_COD = P.PRO_LINHA "
+                    + " WHERE L.LIN_DESC LIKE '%" + linha + "%'";
+        } else if (isMarca) {
+            String marca = filtros.get("marca");
+            sql += " INNER JOIN MARCA M ON M.MAR_COD = P.PRO_MARCA "
+                    + " WHERE M.MAR_DESC LIKE '%" + marca + "%'";
+        } else {
+            return new ArrayList<>();
+        }
+        return executeNativeQuery(Produto.class, sql);
+    }
+
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void delete(Produto produto) {
         Produto produtoManaged = getEntityManager().find(Produto.class, produto.getProCod());

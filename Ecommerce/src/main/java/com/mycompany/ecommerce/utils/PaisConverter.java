@@ -1,15 +1,14 @@
 package com.mycompany.ecommerce.utils;
 
-import com.mycompany.ecommerce.domains.Marca;
 import com.mycompany.ecommerce.domains.Pais;
 import com.mycompany.ecommerce.services.PaisService;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -20,7 +19,7 @@ import javax.inject.Named;
 @FacesConverter(value = "paisConverter", managed = true)
 public class PaisConverter implements Converter<Pais> {
 
-    @Inject
+    @EJB
     private PaisService paisService;
 
     @Override

@@ -31,6 +31,9 @@ public class FormaPag implements Serializable {
     @NotNull
     @Column(name = "FOP_PRCDESC")
     private BigDecimal fopPrcDesc;
+    @NotNull
+    @Column(name = "FOP_DIASPRC")
+    private Integer fopDiasPrc = 30;
 
     public FormaPag() {
     }
@@ -67,8 +70,20 @@ public class FormaPag implements Serializable {
         this.fopPrcDesc = fopPrcDesc;
     }
 
+    public Integer getFopDiasPrc() {
+        return fopDiasPrc;
+    }
+
+    public void setFopDiasPrc(Integer fopDiasPrc) {
+        this.fopDiasPrc = fopDiasPrc;
+    }
+
     public String getPercDescFormatado() {
         return String.format("%.2f", this.fopPrcDesc);
+    }
+
+    public boolean isPossuiDesconto() {
+        return this.getFopPrcDesc() != null && this.getFopPrcDesc().compareTo(BigDecimal.ZERO) > 0;
     }
 
     @Override

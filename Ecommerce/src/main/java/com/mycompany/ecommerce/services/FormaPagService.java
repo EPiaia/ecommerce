@@ -1,6 +1,5 @@
 package com.mycompany.ecommerce.services;
 
-import com.mycompany.ecommerce.domains.Cidade;
 import com.mycompany.ecommerce.domains.FormaPag;
 import com.mycompany.ecommerce.utils.FiltrosPesquisa;
 import java.util.ArrayList;
@@ -38,6 +37,16 @@ public class FormaPagService extends BaseService<FormaPag> {
         sql = adicionarFiltros(sql, getFiltros(filtros));
         Query query = getEntityManager().createQuery(sql);
         return query.getResultList();
+    }
+
+    public FormaPag getFormaPagPorCodigo(int codigo) {
+        String sql = "SELECT FOP.* FROM FORMA_PAG FOP WHERE FOP.FOP_COD = " + codigo;
+        List<FormaPag> formas = executeNativeQuery(FormaPag.class, sql);
+        if (formas.isEmpty()) {
+            return null;
+        } else {
+            return formas.get(0);
+        }
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

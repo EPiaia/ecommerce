@@ -2,13 +2,13 @@ package com.mycompany.ecommerce.utils;
 
 import com.mycompany.ecommerce.domains.Linha;
 import com.mycompany.ecommerce.services.LinhaService;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -19,7 +19,7 @@ import javax.inject.Named;
 @FacesConverter(value = "linhaConverter", managed = true)
 public class LinhaConverter implements Converter<Linha> {
 
-    @Inject
+    @EJB
     private LinhaService linhaService;
 
     @Override

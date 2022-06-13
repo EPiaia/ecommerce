@@ -70,15 +70,15 @@
                                           sizeLimit="10983040" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
                                           invalidSizeMessage="Maximum file size allowed is 10 MB"
                                           invalidFileMessage="only gif | jpg | jpeg | png is allowed"
-                                          update=":form1" process="@this" styleClass="inputImg"
+                                          update=":form1" process=":form1" styleClass="inputImg"
                                           listener="#{cadastroProdutoBean.handleFileUpload}" />
-                            <p:carousel value="#{cadastroProdutoBean.imagensProduto}" var="foto"
+                            <p:carousel value="#{cadastroProdutoBean.imagensDoProduto}" var="foto"
                                         numVisible="1">
                                 <h:graphicImage value="#{foto.imgBase64}" style="height: 200px" />
                                 <br />
                                 <p:commandButton icon="pi pi-times" styleClass="btnRemoverImg"
                                                  actionListener="#{cadastroProdutoBean.removerImagem(foto)}"
-                                                 update=":form1" />
+                                                 update=":form1" rendered="#{not empty cadastroProdutoBean.produto.fotosProduto}" />
                             </p:carousel>
                         </p:fieldset>
                     </p:panelGrid>

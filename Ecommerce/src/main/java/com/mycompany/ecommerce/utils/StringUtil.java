@@ -27,4 +27,20 @@ public class StringUtil implements Serializable {
         }
         return "";
     }
+
+    public static boolean isNullOrEmpty(String txt) {
+        return txt == null || txt.isEmpty();
+    }
+
+    public static boolean containsOnlyNumbers(String txt) {
+        return txt.matches("[0-9]+");
+    }
+
+    public static String coalesce(String s1, String s2) {
+        if (s1 == null || s1.isEmpty()) {
+            return s2;
+        } else {
+            return s1;
+        }
+    }
 }

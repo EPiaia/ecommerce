@@ -8,17 +8,32 @@
         <title><ui:insert name="title">E-commerce</ui:insert></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <f:event type="preRenderView" listener="#{geralBean.verificarPermissaoUsuario()}" />
+        <h:outputStylesheet library="css" name="estilos.css" />
+        <h:outputScript library="js" name="scripts.js" />
     </h:head>
     <h:body>
-        <h:outputStylesheet library="css" name="estilos.css"  />
+        <script type="text/javascript">
+            function pesquisar() {
+                var pesquisa = document.getElementById('inputBusca').value;
+                if (pesquisa !== "") {
+                    window.location.href = "#{request.contextPath}?desc=" + pesquisa;
+                }
+            }
+
+            function pesquisarEnter(event) {
+                if (event.keyCode == 13) {
+                    pesquisar();
+                }
+            }
+        </script>
         <div class="topbar">
             <h:link outcome="/index" title="Ir para a Página Principal">
                 <p:graphicImage library="imagens" name="logo-amazon.png" styleClass="imgLogo" />
             </h:link>
             <h:form id="formBusca" styleClass="formBusca">
                 <div class="ui-inputgroup">
-                    <p:inputText id="inputBusca" styleClass="inputPesquisa" />
-                    <p:commandButton icon="pi pi-search" styleClass="btnPesquisa"/>
+                    <p:inputText id="inputBusca" maxlength="50" onkeypress="pesquisarEnter(event)" styleClass="inputPesquisa" autocomplete="false" />
+                    <p:button icon="pi pi-search" styleClass="btnPesquisa" onclick="pesquisar();" />
                 </div>
             </h:form>
             <h:form id="formBtnsTopbar" styleClass="formBtnsTopbar">
@@ -37,7 +52,11 @@
                                 <p:outputLabel value="#{item.produto.itemLabel}" />
                             </p:panelGrid>
                         </p:dataGrid>
-                        <p:commandButton actionListener="#{geralBean.redirecionarCarrinho()}" styleClass="redCarrinho" value="Ir para o Carrinho" />
+                        <br />
+                        <p:panelGrid columns="2" layout="grid">
+                            <p:commandButton actionListener="#{carrinhoBean.cancelarCarrinho()}" styleClass="redCarrinho" value="Cancelar Carrinho" icon="pi pi-ban" />
+                            <p:commandButton actionListener="#{geralBean.redirecionarCarrinho()}" styleClass="redCarrinho" value="Ir para o Carrinho" icon="pi pi-shopping-cart" />
+                        </p:panelGrid>
                     </p:panel>
                 </p:overlayPanel>
             </h:form>

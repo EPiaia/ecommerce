@@ -6,7 +6,9 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -27,6 +29,9 @@ public class ProdutoxImagem implements Serializable {
     @NotNull
     @Column(name = "PXI_ORDEM")
     private Integer pxiOrdem;
+    @JoinColumn(name = "PXI_PROCOD", referencedColumnName = "PRO_COD", insertable = false, updatable = false)
+    @ManyToOne
+    private Produto pxiProduto;
 
     public ProdutoxImagem() {
     }
@@ -53,6 +58,14 @@ public class ProdutoxImagem implements Serializable {
 
     public void setPxiOrdem(Integer pxiOrdem) {
         this.pxiOrdem = pxiOrdem;
+    }
+
+    public Produto getPxiProduto() {
+        return pxiProduto;
+    }
+
+    public void setPxiProduto(Produto pxiProduto) {
+        this.pxiProduto = pxiProduto;
     }
 
     public String getImgBase64() {
