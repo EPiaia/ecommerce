@@ -9,6 +9,15 @@
     <ui:define name="title">Carrinho</ui:define>
 
     <ui:define name="content">
+        <style>
+            body .ui-datagrid .ui-datagrid-footer {
+                background-color: white !important;
+            }
+            .panelGeral > .ui-panel-titlebar {
+                display: flex !important;
+                justify-content: end !important;
+            }
+        </style>
         <h:form id="form1">
             <p:growl id="mensagens" />
             <div class="container">
@@ -57,16 +66,18 @@
                                         </p:panelGrid>
                                     </p:panelGrid>
                                     <p:divider />
-                                    <p:panelGrid columns="4" layout="grid">
-                                        <p:spacer />
-                                        <p:spacer />
-                                        <p:panelGrid columns="2" layout="grid" columnClasses="ui-g-nopad, ui-g-nopad">
-                                            <p:outputLabel value="Valor Total: " styleClass="bold font-18" />
-                                            <h:outputText value="#{carrinhoBean.carrinho.valorTotalBruto}" styleClass="bold font-18">
-                                                <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
-                                            </h:outputText>
+                                    <f:facet name="footer">
+                                        <p:panelGrid columns="4" layout="grid">
+                                            <p:spacer />
+                                            <p:spacer />
+                                            <p:panelGrid columns="2" layout="grid" columnClasses="ui-g-nopad, ui-g-nopad">
+                                                <p:outputLabel value="Valor Total: " styleClass="bold font-18" />
+                                                <h:outputText value="#{carrinhoBean.carrinho.valorTotalItens}" styleClass="bold font-18">
+                                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                </h:outputText>
+                                            </p:panelGrid>
                                         </p:panelGrid>
-                                    </p:panelGrid>
+                                    </f:facet>
                                 </p:dataGrid>
                             </p:panel>
                         </p:tab>
@@ -113,8 +124,8 @@
                                         </p:dataTable>
                                     </p:panelGrid>
                                     <p:panelGrid columns="2" layout="grid">
-                                        <p:outputLabel value="Valor Total Bruto: " rendered="#{carrinhoBean.carrinho.possuiFreteOuDesconto}" styleClass="bold font-16" />
-                                        <h:outputText value="#{carrinhoBean.carrinho.valorTotalBruto}" rendered="#{carrinhoBean.carrinho.possuiFreteOuDesconto}" styleClass="font-16">
+                                        <p:outputLabel value="Valor Total dos Itens: " rendered="#{carrinhoBean.carrinho.possuiFreteOuDesconto}" styleClass="bold font-16" />
+                                        <h:outputText value="#{carrinhoBean.carrinho.valorTotalItens}" rendered="#{carrinhoBean.carrinho.possuiFreteOuDesconto}" styleClass="font-16">
                                             <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
                                         </h:outputText>
                                         <p:outputLabel value="Desconto Forma de Pagamento: " rendered="#{carrinhoBean.carrinho.possuiDescontoFormaPag}" styleClass="bold font-16" />
@@ -135,11 +146,92 @@
                         </p:tab>
                         <p:tab id="tabRevPed" title="Revisar Pedido">
                             <p:panel header="Revisão de Pedido" styleClass="panelGeral">
+                                <f:facet name="header">
+                                    <p:commandButton value="Concluir Pedido" icon="pi pi-check-square" actionListener="#{carrinhoBean.concluirPedido()}" process="@this" />
+                                </f:facet>
                                 <p:fieldset legend="Pedido">
+                                    <p:panelGrid columns="2" layout="grid">
+                                        <p:panelGrid columns="1" layout="grid">
+                                            <p:outputLabel value="Frete Grátis Acima de #{carrinhoBean.carrinho.configuracoes.vlrMinFormatado}"
+                                                           rendered="#{carrinhoBean.carrinho.renderFreteGratis}" styleClass="bold font-18"
+                                                           style="margin-left: 16px" />
+                                            <br />
+                                            <p:panelGrid columns="2" layout="grid">
+                                                <p:outputLabel value="Valor Total Bruto: " styleClass="bold font-16" />
+                                                <h:outputText value="#{carrinhoBean.carrinho.valorTotalBruto}" styleClass="font-16">
+                                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                </h:outputText>
+                                            </p:panelGrid>
+                                            <p:panelGrid columns="2" layout="grid" rendered="#{carrinhoBean.carrinho.possuiDesconto}">
+                                                <p:outputLabel value="Valor Total Descontos: " styleClass="bold font-16" />
+                                                <h:outputText value="#{carrinhoBean.carrinho.valorTotalDescontos}" styleClass="font-16">
+                                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                </h:outputText>
+                                            </p:panelGrid>
+                                            <p:panelGrid columns="2" layout="grid" rendered="#{carrinhoBean.carrinho.possuiFrete}">
+                                                <p:outputLabel value="Valor Frete: " styleClass="bold font-16" />
+                                                <h:outputText value="#{carrinhoBean.carrinho.valorFrete}" styleClass="font-16">
+                                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                </h:outputText>
+                                            </p:panelGrid>
+                                            <p:panelGrid columns="2" layout="grid">
+                                                <p:outputLabel value="Valor Total: " styleClass="bold font-16" />
+                                                <h:outputText value="#{carrinhoBean.carrinho.valorTotal}" styleClass="font-16">
+                                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                </h:outputText>
+                                            </p:panelGrid>
+                                            <br />
+                                            <p:dataTable value="#{carrinhoBean.carrinho.parcelas}" var="parcela" rendered="#{not empty carrinhoBean.carrinho.parcelas}">
+                                                <p:column headerText="Parcela">
+                                                    <h:outputText value="#{parcela.parcelaPk.prcSeq}" />
+                                                </p:column>
+                                                <p:column headerText="Valor">
+                                                    <h:outputText value="#{parcela.prcVlr}">
+                                                        <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                    </h:outputText>
+                                                </p:column>
+                                                <p:column headerText="Data de Vencimento">
+                                                    <h:outputText value="#{parcela.dtVencFormatada}" />
+                                                </p:column>
+                                            </p:dataTable>
+                                            <br />
+                                            <p:dataGrid columns="1" value="#{carrinhoBean.carrinho.itens}" var="item">
+                                                <p:panelGrid columns="2" layout="grid" columnClasses="ui-g-5, ui-g-7">
+                                                    <p:panelGrid columns="1" layout="grid">
+                                                        <p:outputLabel value="#{item.produto.itemLabel}" styleClass="bold font-16" />
+                                                    </p:panelGrid>
+                                                    <p:panelGrid columns="2" layout="grid">
+                                                        <p:outputLabel value="Unitário Bruto: " rendered="#{item.produto.possuiDesconto}" styleClass="bold font-16" />
+                                                        <h:outputText value="#{item.produto.proValorUni}" rendered="#{item.produto.possuiDesconto}" styleClass="font-16">
+                                                            <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                        </h:outputText>
 
+                                                        <p:outputLabel value="Desc. Unitário: " rendered="#{item.produto.possuiDesconto}" styleClass="bold font-16" />
+                                                        <h:outputText value="#{item.produto.descontoUnitario}" rendered="#{item.produto.possuiDesconto}" styleClass="font-16">
+                                                            <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                        </h:outputText>
+
+                                                        <p:outputLabel value="Valor Unitário: " styleClass="bold font-16" />
+                                                        <h:outputText value="#{item.produto.valorReal}" styleClass="font-16">
+                                                            <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                        </h:outputText>
+
+                                                        <p:outputLabel value="Quantidade: " styleClass="bold font-16" />
+                                                        <p:outputLabel value="#{item.quantidade}" styleClass="font-16" />
+
+                                                        <p:outputLabel value="Valor Total: " styleClass="bold font-16" />
+                                                        <h:outputText value="#{item.valorTotal}" styleClass="font-16">
+                                                            <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                                        </h:outputText>
+                                                    </p:panelGrid>
+                                                </p:panelGrid>
+                                                <p:divider layout="horizontal" />
+                                            </p:dataGrid>
+                                        </p:panelGrid>
+                                    </p:panelGrid>
                                 </p:fieldset>
                                 <f:facet name="footer">
-                                    <p:commandButton value="Salvar" icon="pi pi-save" />
+                                    <p:commandButton value="Concluir Pedido" icon="pi pi-check-square" actionListener="#{carrinhoBean.concluirPedido()}" process="@this" />
                                 </f:facet>
                             </p:panel>
                         </p:tab>

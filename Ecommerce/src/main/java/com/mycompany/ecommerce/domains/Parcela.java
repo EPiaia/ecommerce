@@ -8,6 +8,9 @@ import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,6 +26,9 @@ public class Parcela implements Serializable {
 
     @EmbeddedId
     private ParcelaPK parcelaPk = new ParcelaPK();
+    @JoinColumn(name = "PRC_PEDCOD", referencedColumnName = "PRO_COD", insertable = false, updatable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Pedido prcPedido;
     @NotNull
     @Column(name = "PRC_VLR")
     private BigDecimal prcVlr;
@@ -40,6 +46,14 @@ public class Parcela implements Serializable {
 
     public void setParcelaPk(ParcelaPK parcelaPk) {
         this.parcelaPk = parcelaPk;
+    }
+
+    public Pedido getPrcPedido() {
+        return prcPedido;
+    }
+
+    public void setPrcPedido(Pedido prcPedido) {
+        this.prcPedido = prcPedido;
     }
 
     public BigDecimal getPrcVlr() {

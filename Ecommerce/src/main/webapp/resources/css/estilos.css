@@ -260,3 +260,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
 }
+
+.width-110 {
+    width: 110px !important;
+}

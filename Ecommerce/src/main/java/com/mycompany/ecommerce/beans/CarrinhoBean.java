@@ -15,6 +15,7 @@ import com.mycompany.ecommerce.services.CidadeService;
 import com.mycompany.ecommerce.services.ConfiguracaoService;
 import com.mycompany.ecommerce.services.EnderecoService;
 import com.mycompany.ecommerce.services.FormaPagService;
+import com.mycompany.ecommerce.services.PedidoService;
 import com.mycompany.ecommerce.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ public class CarrinhoBean implements Serializable {
     private FormaPagService fps;
     @EJB
     private ConfiguracaoService confService;
+    @EJB
+    private PedidoService ps;
 
     @Inject
     private GeralBean geralBean;
@@ -71,6 +74,11 @@ public class CarrinhoBean implements Serializable {
         JsfUtil.redirect("/Ecommerce/index.xhtml");
     }
 
+    public void concluirPedido() {
+        ps.salvarPedido(carrinho);
+        cancelarCarrinho();
+    }
+
     public String onFlowProcess(FlowEvent event) {
         if ("tabEndEntrega".equals(event.getOldStep()) && "tabFormaPag".equals(event.getNewStep())) {
             if (this.carrinho.getEnderecoEntrega() == null) {
@@ -95,6 +103,7 @@ public class CarrinhoBean implements Serializable {
         } else if (geralBean.isTipoAcessoCliente()) {
             Item item = new Item(produto);
             this.carrinho.getItens().add(item);
+            this.carrinho.recalcularValores();
             JsfUtil.info("Produto adicionado ao carrinho com sucesso");
         }
     }

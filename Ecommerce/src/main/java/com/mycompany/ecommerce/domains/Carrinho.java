@@ -142,12 +142,33 @@ public class Carrinho implements Serializable {
         recalcularValores();
     }
 
-    public BigDecimal getValorTotalBruto() {
+    public BigDecimal getValorTotalItens() {
         BigDecimal total = BigDecimal.ZERO;
         for (Item item : itens) {
             total = total.add(item.getValorTotal());
         }
         return total;
+    }
+
+    public BigDecimal getValorTotalBruto() {
+        BigDecimal totalBruto = BigDecimal.ZERO;
+        for (Item item : itens) {
+            totalBruto = totalBruto.add(item.getProduto().getProValorUni());
+        }
+        return totalBruto;
+    }
+
+    public BigDecimal getValorTotalDescontos() {
+        BigDecimal totalDesc = BigDecimal.ZERO;
+        for (Item item : itens) {
+            totalDesc = totalDesc.add(item.getProduto().getDescontoUnitario());
+        }
+        totalDesc = totalDesc.add(this.valorDescFormaPag);
+        return totalDesc;
+    }
+
+    public BigDecimal getValorTotalSemFrete() {
+        return valorTotal.subtract(valorFrete);
     }
 
     public boolean isPossuiDescontoFormaPag() {
@@ -162,7 +183,19 @@ public class Carrinho implements Serializable {
         return isPossuiDescontoFormaPag() || isPossuiFrete();
     }
 
+    public boolean isPossuiDesconto() {
+        return getValorTotalDescontos().compareTo(BigDecimal.ZERO) > 0;
+    }
+
+    public boolean isRenderFreteGratis() {
+        return this.configuracoes.isCfgCtrlFrete() && this.configuracoes.getCfgVlrMinFrete() != null && this.getValorTotalSemFrete().compareTo(this.configuracoes.getCfgVlrMinFrete()) <= 0;
+    }
+
     public void recalcularValores() {
+        setValorFrete(BigDecimal.ZERO);
+        setValorTotal(BigDecimal.ZERO);
+        setValorDescFormaPag(BigDecimal.ZERO);
+        this.parcelas = new ArrayList<>();
         BigDecimal valorTotal = BigDecimal.ZERO;
         for (Item item : getItens()) {
             valorTotal = valorTotal.add(item.getValorTotal());

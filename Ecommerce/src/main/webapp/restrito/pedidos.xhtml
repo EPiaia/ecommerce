@@ -1,0 +1,62 @@
+<ui:composition template="/WEB-INF/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">Consultar Pedidos</ui:define>
+
+    <ui:define name="content">
+        <h:form id="form1">
+            <p:growl id="mensagens" />
+            <p:panel header="Filtros" styleClass="panelGeral">
+                <p:panelGrid columns="3" layout="grid">
+                    <p:panelGrid columns="1" layout="grid">
+                        <p:outputLabel value="Código" />
+                        <p:inputText value="#{consultaPedidosBean.filtroCod}" maxlength="8" styleClass="inputTextCodigo">
+                            <p:keyFilter mask="pint" />
+                        </p:inputText>
+
+                        <p:outputLabel value="Período de Emissão" />
+                        <p:panelGrid columns="2" layout="grid" columnClasses="padding-left-panelgrid ui-g-nopad, padding-left-panelgrid ui-g-nopad">
+                            <p:calendar value="#{consultaPedidosBean.filtroDateIni}" inputStyleClass="width-110" />
+                            <p:calendar value="#{consultaPedidosBean.filtroDateFin}" inputStyleClass="width-110" />
+                        </p:panelGrid>
+
+                        <p:outputLabel value="Status" />
+                        <p:selectOneMenu value="#{consultaPedidosBean.filtroStatus}" style="width: 250px">
+                            <f:selectItem itemLabel="Todos" itemValue="#{null}" />
+                            <f:selectItems value="#{consultaPedidosBean.statusDisponiveis}" var="status" itemLabel="#{status.statusLabel}" itemValue="#{status}" />
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                </p:panelGrid>
+                <f:facet name="footer">
+                    <p:commandButton value="Pesquisar" icon="pi pi-search" actionListener="#{consultaPedidosBean.pesquisar()}" update=":form1" />
+                    <p:commandButton value="Limpar" icon="pi pi-trash" actionListener="#{consultaPedidosBean.limparFiltros()}" update=":form1" />
+                </f:facet>
+            </p:panel>
+
+            <br />
+
+            <p:panel header="Pedidos Filtrados">
+                <p:dataTable value="#{consultaPedidosBean.pedidosFiltrados}" var="pedido" paginator="true" paginatorPosition="bottom" reflow="true" rowKey="#{pedido.pedCod}" sortBy="#{pedido.pedData}">
+                    <p:column headerText="Código">
+                        <h:outputText value="#{pedido.pedCod}" />
+                    </p:column>
+                    <p:column headerText="Data/Hora">
+                        <h:outputText value="#{pedido.dataFormatada}" />
+                    </p:column>
+                    <p:column headerText="Status">
+                        <h:outputText value="#{pedido.status.statusLabel}" />
+                    </p:column>
+                    <p:column headerText="Valor Total">
+                        <h:outputText value="#{pedido.pedVlrTotal}">
+                            <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

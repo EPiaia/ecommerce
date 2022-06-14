@@ -63,6 +63,10 @@ public class Configuracao implements Serializable {
         this.cfgVlrMinFrete = cfgVlrMinFrete;
     }
 
+    public String getVlrMinFormatado() {
+        return String.format("R$ %.2f", this.cfgVlrMinFrete);
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;

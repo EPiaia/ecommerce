@@ -48,9 +48,13 @@ public abstract class BaseService<T> {
         return retorno;
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public T save(T obj) {
         return getEntityManager().merge(obj);
+    }
+
+    public void saveNew(T obj) {
+        getEntityManager().persist(obj);
+        getEntityManager().flush();
     }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)

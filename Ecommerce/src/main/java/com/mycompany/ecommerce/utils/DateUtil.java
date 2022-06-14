@@ -12,6 +12,7 @@ import java.util.Date;
 public class DateUtil implements Serializable {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    private static final SimpleDateFormat sdfHr = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public static Date addDays(Date data, int days) {
         Calendar cal = Calendar.getInstance();
@@ -22,6 +23,10 @@ public class DateUtil implements Serializable {
 
     public static String getDataFormatada(Date data) {
         return sdf.format(data);
+    }
+
+    public static String getDataHoraFormatada(Date data) {
+        return sdfHr.format(data);
     }
 
 }

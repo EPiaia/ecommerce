@@ -17,7 +17,7 @@ public class ParcelaPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "PRC_PEDCOD")
-    private String prcPedCod;
+    private Integer prcPedCod;
     @Basic(optional = false)
     @NotNull
     @Column(name = "PRC_SEQ")
@@ -26,16 +26,16 @@ public class ParcelaPK implements Serializable {
     public ParcelaPK() {
     }
 
-    public ParcelaPK(String prcPedCod, Integer prcSeq) {
+    public ParcelaPK(Integer prcPedCod, Integer prcSeq) {
         this.prcPedCod = prcPedCod;
         this.prcSeq = prcSeq;
     }
 
-    public String getPrcPedCod() {
+    public Integer getPrcPedCod() {
         return prcPedCod;
     }
 
-    public void setPrcPedCod(String prcPedCod) {
+    public void setPrcPedCod(Integer prcPedCod) {
         this.prcPedCod = prcPedCod;
     }
 

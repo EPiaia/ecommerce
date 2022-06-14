@@ -38,6 +38,7 @@
             </h:form>
             <h:form id="formBtnsTopbar" styleClass="formBtnsTopbar">
                 <p:menuButton buttonStyleClass="btnTopBar btnConta" icon="pi pi-user" rendered="#{not geralBean.tipoAcessoUsuarioPublico}">
+                    <p:menuitem value="Meus Pedidos" outcome="/restrito/pedidos" ajax="false" rendered="#{geralBean.tipoAcessoCliente or geralBean.tipoAcessoAdmin}" />
                     <p:menuitem value="Sair" actionListener="#{loginBean.sair()}" ajax="false" />
                 </p:menuButton>
                 <p:button styleClass="btnTopBar btnConta" outcome="login" icon="pi pi-sign-in" rendered="#{geralBean.tipoAcessoUsuarioPublico}" />
