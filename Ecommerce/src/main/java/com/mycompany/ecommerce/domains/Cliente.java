@@ -91,6 +91,10 @@ public class Cliente implements Serializable {
         this.cliUsuario = cliUsuario;
     }
 
+    public String getClienteLabel() {
+        return this.cliCod + " - " + this.cliNome;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;

@@ -22,6 +22,15 @@ public class ClienteService extends BaseService<Cliente> {
         return fp;
     }
 
+    public List<Cliente> getClientes() {
+        String sql = "SELECT CLI.* FROM CLIENTE CLI";
+        return executeNativeQuery(Cliente.class, sql);
+    }
+
+    public Cliente getClientePorCodigo(int codigo) {
+        return getEntityManager().find(Cliente.class, codigo);
+    }
+
     public Cliente getClientePorUsuario(String usuario) {
         String sql = "SELECT CLI.* FROM CLIENTE CLI WHERE CLI_USUARIO = '" + usuario + "'";
         List<Cliente> retorno = executeNativeQuery(Cliente.class, sql);

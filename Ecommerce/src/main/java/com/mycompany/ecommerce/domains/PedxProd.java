@@ -89,6 +89,14 @@ public class PedxProd implements Serializable {
         this.pxpQuantidade = pxpQuantidade;
     }
 
+    public String getQuantidade() {
+        return String.format("%.2f", this.pxpQuantidade);
+    }
+
+    public BigDecimal getValorTotal() {
+        return this.pxpVlrUni.subtract(this.pxpVlrDescUni).multiply(pxpQuantidade);
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

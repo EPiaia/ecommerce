@@ -29,6 +29,13 @@
                             <f:selectItem itemLabel="Todos" itemValue="#{null}" />
                             <f:selectItems value="#{consultaPedidosBean.statusDisponiveis}" var="status" itemLabel="#{status.statusLabel}" itemValue="#{status}" />
                         </p:selectOneMenu>
+
+                        <p:outputLabel value="Cliente" for="cliente" rendered="#{geralBean.tipoAcessoAdmin}" />
+                        <p:autoComplete id="cliente" value="#{consultaPedidosBean.filtroCliente}" rendered="#{geralBean.tipoAcessoAdmin}"
+                                        completeMethod="#{consultaPedidosBean.completeCliente}" style="margin-right: 10px"
+                                        var="cliente" itemLabel="#{cliente.clienteLabel}" itemValue="#{cliente}"
+                                        dropdown="true" placeholder="Pesquise pelo nome ou código do cliente"
+                                        converter="#{clienteConverter}" forceSelection="true" scrollHeight="250" />
                     </p:panelGrid>
                 </p:panelGrid>
                 <f:facet name="footer">
@@ -41,7 +48,7 @@
 
             <p:panel header="Pedidos Filtrados">
                 <p:dataTable value="#{consultaPedidosBean.pedidosFiltrados}" var="pedido" paginator="true" paginatorPosition="bottom" reflow="true" rowKey="#{pedido.pedCod}" sortBy="#{pedido.pedData}">
-                    <p:column headerText="Código">
+                    <p:column headerText="Código" width="100">
                         <h:outputText value="#{pedido.pedCod}" />
                     </p:column>
                     <p:column headerText="Data/Hora">
@@ -55,8 +62,141 @@
                             <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
                         </h:outputText>
                     </p:column>
+                    <p:column headerText="Ações">
+                        <p:commandButton value="Detalhar" icon="pi pi-external-link" actionListener="#{consultaPedidosBean.abrirDetalhesPedido(pedido)}" process="@this" update=":form1" />
+                    </p:column>
                 </p:dataTable>
             </p:panel>
+
+            <p:dialog id="detalhePedido" widgetVar="wvDetalhePedido" header="Detalhes do Pedido #{consultaPedidosBean.pedidoDetalhe.pedCod}" width="1250" rendered="#{consultaPedidosBean.pedidoDetalhe ne null}">
+                <p:tabView>
+                    <p:tab title="Geral">
+                        <p:panelGrid columns="3" layout="grid">
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Valor Total Bruto" />
+                                <p:inputNumber value="#{consultaPedidosBean.pedidoDetalhe.totalBruto}" decimalPlaces="2" minValue="0" symbol="R$ " disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Valor Desconto Unitário" />
+                                <p:inputNumber value="#{consultaPedidosBean.pedidoDetalhe.totalDescUnitario}" decimalPlaces="2" minValue="0" symbol="R$ " disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Valor Desconto Forma de Pagamento" />
+                                <p:inputNumber value="#{consultaPedidosBean.pedidoDetalhe.pedVlrDescForPag}" decimalPlaces="2" minValue="0" symbol="R$ " disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Valor Frete" />
+                                <p:inputNumber value="#{consultaPedidosBean.pedidoDetalhe.pedVlrFrete}" decimalPlaces="2" minValue="0" symbol="R$ " disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Valor Total" />
+                                <p:inputNumber value="#{consultaPedidosBean.pedidoDetalhe.pedVlrTotal}" decimalPlaces="2" minValue="0" symbol="R$ " disabled="true" />
+                            </p:panelGrid>
+                            <p:spacer />
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Data de Emissão" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.dataFormatada}" disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Forma de Pagamento" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.pedForPag.formaPagLabel}" disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid" rendered="#{geralBean.tipoAcessoCliente}">
+                                <p:outputLabel value="Status" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.status.statusLabel}" disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid" rendered="#{geralBean.tipoAcessoAdmin}">
+                                <p:outputLabel value="Status" />
+                                <p:selectOneMenu value="#{consultaPedidosBean.pedidoDetalhe.pedStatus}" style="width: 100%">
+                                    <f:selectItems value="#{consultaPedidosBean.statusDisponiveis}" var="stat" itemLabel="#{stat.statusLabel}" itemValue="#{stat.statusCodigo}" />
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                        </p:panelGrid>
+                        <br />
+                        <p:dataTable value="#{consultaPedidosBean.pedidoDetalhe.pedParcelas}" var="parcela">
+                            <p:column headerText="Parcela">
+                                <h:outputText value="#{parcela.parcelaPk.prcSeq}" />
+                            </p:column>
+                            <p:column headerText="Valor">
+                                <h:outputText value="#{parcela.prcVlr}">
+                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Data de Vencimento">
+                                <h:outputText value="#{parcela.dtVencFormatada}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Itens">
+                        <p:dataTable value="#{consultaPedidosBean.pedidoDetalhe.pedProdutos}" var="produto">
+                            <p:column headerText="Código" width="100">
+                                <h:outputText value="#{produto.pxpProduto.proCod}" />
+                            </p:column>
+                            <p:column headerText="Nome">
+                                <h:outputText value="#{produto.pxpProduto.proDesc}" />
+                            </p:column>
+                            <p:column headerText="Un. Bruto" width="150">
+                                <h:outputText value="#{produto.pxpVlrUni}">
+                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Desc. Unitário" width="150">
+                                <h:outputText value="#{produto.pxpVlrDescUni}">
+                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Quantidade" width="115">
+                                <h:outputText value="#{produto.quantidade}" />
+                            </p:column>
+                            <p:column headerText="Valor Total" width="150">
+                                <h:outputText value="#{produto.valorTotal}">
+                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                </h:outputText>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Entrega">
+                        <p:panelGrid columns="7" layout="grid" columnClasses="ui-g-4, ui-g-4, ui-g-4, ui-g-6, ui-g-6, ui-g-3, ui-g-9">
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="País" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.pedEndEntrega.endCidade.cidEstado.estPais.paisDesc}" disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Estado" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.pedEndEntrega.endCidade.cidEstado.estDesc}" disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Cidade" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.pedEndEntrega.endCidade.cidDesc}" disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Bairro" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.pedEndEntrega.endBairro}" disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Rua" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.pedEndEntrega.endRua}" disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Número" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.pedEndEntrega.endNum}" disabled="true" />
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <p:outputLabel value="Complemento" />
+                                <p:inputText value="#{consultaPedidosBean.pedidoDetalhe.pedEndEntrega.endCompl}" disabled="true" />
+                            </p:panelGrid>
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab title="Observações">
+                        <p:inputTextarea value="#{consultaPedidosBean.pedidoDetalhe.pedObservacoes}" disabled="#{not geralBean.tipoAcessoAdmin}" />
+                    </p:tab>
+                </p:tabView>
+                <f:facet name="footer">
+                    <p:commandButton value="Salvar" icon="pi pi-save" actionListener="#{consultaPedidosBean.gravarAlteracoes}"
+                                     process="@this :form1:detalhePedido" rendered="#{geralBean.tipoAcessoAdmin}" />
+                    <p:commandButton value="Fechar" icon="pi pi-times" onclick="PF('wvDetalhePedido').hide()" />
+                </f:facet>
+            </p:dialog>
         </h:form>
     </ui:define>
 </ui:composition>

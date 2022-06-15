@@ -86,6 +86,10 @@ public class FormaPag implements Serializable {
         return this.getFopPrcDesc() != null && this.getFopPrcDesc().compareTo(BigDecimal.ZERO) > 0;
     }
 
+    public String getFormaPagLabel() {
+        return this.fopCod + " - " + this.fopDesc;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;

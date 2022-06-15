@@ -26,7 +26,7 @@ public class Parcela implements Serializable {
 
     @EmbeddedId
     private ParcelaPK parcelaPk = new ParcelaPK();
-    @JoinColumn(name = "PRC_PEDCOD", referencedColumnName = "PRO_COD", insertable = false, updatable = false)
+    @JoinColumn(name = "PRC_PEDCOD", referencedColumnName = "PED_COD", insertable = false, updatable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Pedido prcPedido;
     @NotNull

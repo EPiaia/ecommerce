@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -60,11 +61,11 @@ public class Pedido implements Serializable {
     @Column(name = "PED_STATUS")
     private Integer pedStatus = 1; // 1 - Em Processamento   2 - Processado   3 - Enviado   4 - Entregue
     @Lob
-    @Column(name = "PED_OBSERVACOES")
+    @Column(name = "PED_OBSERVACOES", columnDefinition = "TEXT")
     private String pedObservacoes;
-    @OneToMany(mappedBy = "prcPedido")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "prcPedido")
     private List<Parcela> pedParcelas;
-    @OneToMany(mappedBy = "pxpPedido")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pxpPedido")
     private List<PedxProd> pedProdutos;
 
     public Pedido() {
@@ -172,6 +173,22 @@ public class Pedido implements Serializable {
 
     public String getDataFormatada() {
         return DateUtil.getDataHoraFormatada(pedData);
+    }
+
+    public BigDecimal getTotalBruto() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (PedxProd prod : this.pedProdutos) {
+            total = total.add(prod.getPxpVlrUni());
+        }
+        return total;
+    }
+
+    public BigDecimal getTotalDescUnitario() {
+        BigDecimal total = BigDecimal.ZERO;
+        for (PedxProd prod : this.pedProdutos) {
+            total = total.add(prod.getPxpVlrDescUni());
+        }
+        return total;
     }
 
     @Override
