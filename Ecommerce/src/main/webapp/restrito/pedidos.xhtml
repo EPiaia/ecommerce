@@ -47,11 +47,12 @@
             <br />
 
             <p:panel header="Pedidos Filtrados">
-                <p:dataTable value="#{consultaPedidosBean.pedidosFiltrados}" var="pedido" paginator="true" paginatorPosition="bottom" reflow="true" rowKey="#{pedido.pedCod}" sortBy="#{pedido.pedData}">
+                <p:dataTable value="#{consultaPedidosBean.pedidosFiltrados}" var="pedido" paginator="true" paginatorPosition="bottom" reflow="true"
+                             rowKey="#{pedido.pedCod}">
                     <p:column headerText="Código" width="100">
                         <h:outputText value="#{pedido.pedCod}" />
                     </p:column>
-                    <p:column headerText="Data/Hora">
+                    <p:column headerText="Data/Hora" sortBy="#{pedido.pedData}">
                         <h:outputText value="#{pedido.dataFormatada}" />
                     </p:column>
                     <p:column headerText="Status">

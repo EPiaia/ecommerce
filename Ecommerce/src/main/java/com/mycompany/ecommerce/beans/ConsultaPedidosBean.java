@@ -3,7 +3,10 @@ package com.mycompany.ecommerce.beans;
 import com.mycompany.ecommerce.domains.Cliente;
 import com.mycompany.ecommerce.domains.Pedido;
 import com.mycompany.ecommerce.services.ClienteService;
+import com.mycompany.ecommerce.services.ParcelaService;
 import com.mycompany.ecommerce.services.PedidoService;
+import com.mycompany.ecommerce.services.PedxProdService;
+import com.mycompany.ecommerce.utils.DateUtil;
 import com.mycompany.ecommerce.utils.JsfUtil;
 import com.mycompany.ecommerce.utils.StatusPedido;
 import java.io.Serializable;
@@ -31,6 +34,10 @@ public class ConsultaPedidosBean implements Serializable {
     private PedidoService pedidoService;
     @EJB
     private ClienteService cs;
+    @EJB
+    private PedxProdService pedxProdService;
+    @EJB
+    private ParcelaService parcelaService;
 
     @Inject
     private GeralBean gerBean;
@@ -61,9 +68,11 @@ public class ConsultaPedidosBean implements Serializable {
         if (filtroCod != null) {
             filtros.put("pedCod", filtroCod);
         } else {
-            filtros.put("pedDataIni", filtroDateIni);
-            filtros.put("pedDataFin", filtroDateFin);
-            filtros.put("pedStatus", filtroStatus);
+            filtros.put("pedDataIni", DateUtil.getDataHoraFormatadaSql(filtroDateIni));
+            filtros.put("pedDataFin", DateUtil.getDataHoraFormatadaSql(filtroDateFin));
+            if (filtroStatus != null) {
+                filtros.put("pedStatus", filtroStatus.getStatusCodigo());
+            }
         }
         pedidosFiltrados = pedidoService.filtrar(filtros);
     }
@@ -83,6 +92,11 @@ public class ConsultaPedidosBean implements Serializable {
 
     public void abrirDetalhesPedido(Pedido pedido) {
         this.pedidoDetalhe = pedido;
+        Map<String, Object> filtros = new HashMap<>();
+        filtros.put("pxpPedCod", pedido.getPedCod());
+        filtros.put("prcPedCod", pedido.getPedCod());
+        pedido.setPedProdutos(pedxProdService.filtrar(filtros));
+        pedido.setPedParcelas(parcelaService.filtrar(filtros));
         JsfUtil.pfShowDialog("wvDetalhePedido");
     }
 

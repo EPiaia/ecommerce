@@ -4,21 +4,21 @@ import com.mycompany.ecommerce.utils.DateUtil;
 import com.mycompany.ecommerce.utils.StatusPedido;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -63,10 +63,10 @@ public class Pedido implements Serializable {
     @Lob
     @Column(name = "PED_OBSERVACOES", columnDefinition = "TEXT")
     private String pedObservacoes;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "prcPedido")
-    private List<Parcela> pedParcelas;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pxpPedido")
-    private List<PedxProd> pedProdutos;
+    @Transient
+    private List<Parcela> pedParcelas = new ArrayList<>();
+    @Transient
+    private List<PedxProd> pedProdutos = new ArrayList<>();
 
     public Pedido() {
     }
@@ -178,7 +178,7 @@ public class Pedido implements Serializable {
     public BigDecimal getTotalBruto() {
         BigDecimal total = BigDecimal.ZERO;
         for (PedxProd prod : this.pedProdutos) {
-            total = total.add(prod.getPxpVlrUni());
+            total = total.add(prod.getPxpVlrUni().multiply(prod.getPxpQuantidade()));
         }
         return total;
     }
@@ -186,7 +186,7 @@ public class Pedido implements Serializable {
     public BigDecimal getTotalDescUnitario() {
         BigDecimal total = BigDecimal.ZERO;
         for (PedxProd prod : this.pedProdutos) {
-            total = total.add(prod.getPxpVlrDescUni());
+            total = total.add(prod.getPxpVlrDescUni().multiply(prod.getPxpQuantidade()));
         }
         return total;
     }

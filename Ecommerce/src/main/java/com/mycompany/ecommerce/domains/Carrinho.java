@@ -150,10 +150,10 @@ public class Carrinho implements Serializable {
         return total;
     }
 
-    public BigDecimal getValorTotalBruto() {
+    public BigDecimal getValorTotalBrutoItens() {
         BigDecimal totalBruto = BigDecimal.ZERO;
         for (Item item : itens) {
-            totalBruto = totalBruto.add(item.getProduto().getProValorUni());
+            totalBruto = totalBruto.add(item.getProduto().getProValorUni().multiply(item.getQuantidade()));
         }
         return totalBruto;
     }
@@ -161,7 +161,7 @@ public class Carrinho implements Serializable {
     public BigDecimal getValorTotalDescontos() {
         BigDecimal totalDesc = BigDecimal.ZERO;
         for (Item item : itens) {
-            totalDesc = totalDesc.add(item.getProduto().getDescontoUnitario());
+            totalDesc = totalDesc.add(item.getProduto().getDescontoUnitario().multiply(item.getQuantidade()));
         }
         totalDesc = totalDesc.add(this.valorDescFormaPag);
         return totalDesc;

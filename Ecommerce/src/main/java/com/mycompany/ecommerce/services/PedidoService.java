@@ -34,7 +34,7 @@ public class PedidoService extends BaseService<Pedido> {
         add(fp, "p.pedCod = ?pedCod", "pedCod", filtros.get("pedCod"));
         add(fp, "p.pedData >= ?pedDataIni", "pedDataIni", filtros.get("pedDataIni"));
         add(fp, "p.pedData <= ?pedDataFin", "pedDataFin", filtros.get("pedDataFin"));
-        add(fp, "p.pedStatus <= ?pedStatus", "pedStatus", filtros.get("pedStatus"));
+        add(fp, "p.pedStatus = ?pedStatus", "pedStatus", filtros.get("pedStatus"));
         add(fp, "p.pedEndEntrega.endCliente.cliCod = ?pedCliente", "pedCliente", filtros.get("pedCliente"));
         return fp;
     }
@@ -42,6 +42,7 @@ public class PedidoService extends BaseService<Pedido> {
     public List<Pedido> filtrar(Map<String, Object> filtros) {
         String sql = "SELECT p FROM Pedido p";
         sql = adicionarFiltros(sql, getFiltros(filtros));
+        sql += " order by p.pedData desc";
         Query query = getEntityManager().createQuery(sql);
         return query.getResultList();
     }
