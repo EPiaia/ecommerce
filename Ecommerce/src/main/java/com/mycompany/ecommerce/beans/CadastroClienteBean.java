@@ -72,10 +72,14 @@ public class CadastroClienteBean implements Serializable {
             JsfUtil.warn("A senha deve possui entre 6 e 12 caracteres");
             return false;
         }
-        List<Cliente> clientes = new ArrayList<>();
-        Map<String, Object> filtros = new HashMap<>();
         String cpf = this.cliente.getCliCpf();
         cpf = cpf.replace(".", "").replace("-", "");
+        if (!StringUtil.isCPFValido(cpf)) {
+            JsfUtil.warn("O CPF informado não é válido");
+            return false;
+        }
+        List<Cliente> clientes = new ArrayList<>();
+        Map<String, Object> filtros = new HashMap<>();
         filtros.put("cliCpf", cpf);
         clientes = clienteService.filtrar(filtros);
         if (cliente != null && !clientes.isEmpty()) {
