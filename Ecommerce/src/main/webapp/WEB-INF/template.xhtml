@@ -13,13 +13,6 @@
     </h:head>
     <h:body>
         <script type="text/javascript">
-            function pesquisar() {
-                var pesquisa = document.getElementById('inputBusca').value;
-                if (pesquisa !== "") {
-                    window.location.href = "#{request.contextPath}?desc=" + pesquisa;
-                }
-            }
-
             function pesquisarEnter(event) {
                 if (event.keyCode == 13) {
                     pesquisar();
@@ -31,8 +24,9 @@
                 <p:graphicImage library="imagens" name="logo.png" styleClass="imgLogo" />
             </h:link>
             <h:form id="formBusca" styleClass="formBusca">
+                <p:remoteCommand name="pesquisar" actionListener="#{geralBean.pesquisar()}" />
                 <div class="ui-inputgroup">
-                    <p:inputText id="inputBusca" maxlength="50" onkeypress="pesquisarEnter(event)" styleClass="inputPesquisa" autocomplete="false" />
+                    <p:inputText id="inputBusca" value="#{geralBean.txtPesquisa}" maxlength="50" onkeypress="pesquisarEnter(event)" styleClass="inputPesquisa" autocomplete="false" />
                     <p:button icon="pi pi-search" styleClass="btnPesquisa" onclick="pesquisar();" />
                 </div>
             </h:form>

@@ -5,6 +5,7 @@ import com.mycompany.ecommerce.domains.PaginaxAcesso;
 import com.mycompany.ecommerce.domains.Usuario;
 import com.mycompany.ecommerce.services.GeralService;
 import com.mycompany.ecommerce.utils.JsfUtil;
+import com.mycompany.ecommerce.utils.StringUtil;
 import com.mycompany.ecommerce.utils.TipoAcessoEnum;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class GeralBean implements Serializable {
     private Usuario usuarioLogado;
     private Cliente clienteLogado;
     private Map<String, List<TipoAcessoEnum>> paginasxPermissao = new HashMap<>();
+    private String txtPesquisa;
 
     @PostConstruct
     private void init() {
@@ -73,6 +75,12 @@ public class GeralBean implements Serializable {
         JsfUtil.redirect("/Ecommerce/carrinho.xhtml");
     }
 
+    public void pesquisar() {
+        if (!StringUtil.isNullOrEmpty(txtPesquisa)) {
+            JsfUtil.redirect("/Ecommerce/produtos.xhtml?desc=" + txtPesquisa);
+        }
+    }
+
     public boolean isTipoAcessoUsuarioPublico() {
         return usuarioLogado.getUsrTpAcesso().equals(1);
     }
@@ -99,5 +107,13 @@ public class GeralBean implements Serializable {
 
     public void setClienteLogado(Cliente clienteLogado) {
         this.clienteLogado = clienteLogado;
+    }
+
+    public String getTxtPesquisa() {
+        return "";
+    }
+
+    public void setTxtPesquisa(String txtPesquisa) {
+        this.txtPesquisa = txtPesquisa;
     }
 }
