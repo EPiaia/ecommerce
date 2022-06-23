@@ -15,30 +15,30 @@
                     <p:panel styleClass="panelGeral">
                         <p:panelGrid columns="6" layout="grid" styleClass="ui-g" columnClasses="ui-g-6, ui-g-3, ui-g-3, ui-g-4, ui-g-3, ui-g-3">
                             <p:panelGrid columns="1" layout="grid">
-                                <p:outputLabel value="Nome Completo" />
-                                <p:inputText value="#{cadastroClienteBean.cliente.cliNome}" required="true" maxlength="100" />
+                                <p:outputLabel value="Nome Completo" for="nome" />
+                                <p:inputText id="nome" value="#{cadastroClienteBean.cliente.cliNome}" required="true" maxlength="100" />
                             </p:panelGrid>
                             <p:panelGrid columns="1" layout="grid">
-                                <p:outputLabel value="CPF" />
-                                <p:inputMask value="#{cadastroClienteBean.cliente.cliCpf}" mask="999.999.999-99" validateMask="true">
+                                <p:outputLabel value="CPF" for="cpf" />
+                                <p:inputMask id="cpf" value="#{cadastroClienteBean.cliente.cliCpf}" required="true" mask="999.999.999-99" validateMask="true">
                                     <p:ajax event="blur" process="@this" />
                                 </p:inputMask>
                             </p:panelGrid>
                             <p:panelGrid columns="1" layout="grid">
-                                <p:outputLabel value="Telefone" />
-                                <p:inputMask value="#{cadastroClienteBean.cliente.cliTelefone}" mask="(99)99999-9999" validateMask="true" />
+                                <p:outputLabel value="Telefone" for="telefone" />
+                                <p:inputMask id="telefone" value="#{cadastroClienteBean.cliente.cliTelefone}" mask="(99)99999-9999" validateMask="true" />
                             </p:panelGrid>
                             <p:panelGrid columns="1" layout="grid">
-                                <p:outputLabel value="E-mail" />
-                                <p:inputText value="#{cadastroClienteBean.cliente.cliEmail}" maxlength="50" />
+                                <p:outputLabel value="E-mail" for="email" />
+                                <p:inputText id="email" value="#{cadastroClienteBean.cliente.cliEmail}" maxlength="50" />
                             </p:panelGrid>
                             <p:panelGrid columns="1" layout="grid">
-                                <p:outputLabel value="Nome de Usuário" />
-                                <p:inputText value="#{cadastroClienteBean.login}" required="true" maxlength="20" />
+                                <p:outputLabel value="Nome de Usuário" for="nomeUsu" />
+                                <p:inputText id="nomeUsu" value="#{cadastroClienteBean.login}" required="true" maxlength="20" />
                             </p:panelGrid>
                             <p:panelGrid columns="1" layout="grid">
-                                <p:outputLabel value="Senha" />
-                                <p:password value="#{cadastroClienteBean.senha}" required="true" maxlength="12" />
+                                <p:outputLabel value="Senha" for="senha" />
+                                <p:password id="senha" value="#{cadastroClienteBean.senha}" required="true" maxlength="12" />
                             </p:panelGrid>
                         </p:panelGrid>
                         <f:facet name="footer">

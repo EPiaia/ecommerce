@@ -56,12 +56,14 @@ public class PesquisaProdutosBean implements Serializable {
                 if (linha == null) {
                     throw new RegraNegocioException("A Linha pesquisada não existe");
                 }
+                filtros.put("linha", txtLinha);
                 descPesquisa = linha.getLinDesc();
             } else if (isMarca) {
                 Marca marca = ms.getMarcaPorCodigo(Integer.parseInt(txtMarca));
                 if (marca == null) {
                     throw new RegraNegocioException("A Marca pesquisada não existe");
                 }
+                filtros.put("marca", txtMarca);
                 descPesquisa = marca.getMarDesc();
             } else {
                 throw new RegraNegocioException("Link inválido");

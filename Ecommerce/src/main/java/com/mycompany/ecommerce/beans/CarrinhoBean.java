@@ -76,7 +76,8 @@ public class CarrinhoBean implements Serializable {
 
     public void concluirPedido() {
         ps.salvarPedido(carrinho);
-        cancelarCarrinho();
+        inicializarCarrinho();
+        JsfUtil.redirect("/Ecommerce/restrito/pedidos.xhtml");
     }
 
     public String onFlowProcess(FlowEvent event) {

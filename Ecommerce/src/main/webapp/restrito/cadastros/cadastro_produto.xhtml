@@ -18,17 +18,17 @@
                             <p:inputText id="codigo" value="#{cadastroProdutoBean.produto.proCod}" disabled="true" styleClass="inputTextCodigo" />
 
                             <p:outputLabel value="Descrição" for="descricao" />
-                            <p:inputText id="descricao" value="#{cadastroProdutoBean.produto.proDesc}" maxlength="50" />
+                            <p:inputText id="descricao" value="#{cadastroProdutoBean.produto.proDesc}" maxlength="50" required="true" />
 
                             <p:outputLabel value="Marca" for="marca" />
                             <p:autoComplete id="marca" value="#{cadastroProdutoBean.produto.proMarca}"
                                             completeMethod="#{cadastroProdutoBean.completeMarca}" style="margin-right: 10px"
                                             var="marca" itemLabel="#{marca.marcaLabel}" itemValue="#{marca}"
-                                            dropdown="true" placeholder="Pesquisa pelo nome da marca"
+                                            dropdown="true" placeholder="Pesquisa pelo nome da marca" required="true"
                                             converter="#{marcaConverter}" forceSelection="true" scrollHeight="250" />
 
                             <p:outputLabel value="Linha" for="linha" />
-                            <p:autoComplete id="linha" value="#{cadastroProdutoBean.produto.proLinha}"
+                            <p:autoComplete id="linha" value="#{cadastroProdutoBean.produto.proLinha}" required="true"
                                             completeMethod="#{cadastroProdutoBean.completeLinha}" style="margin-right: 10px"
                                             var="linha" itemLabel="#{linha.linhaLabel}" itemValue="#{linha}" dropdown="true"
                                             placeholder="Pesquisa pelo nome da linha" converter="#{linhaConverter}"
@@ -41,7 +41,7 @@
                             <h:panelGrid columns="2" cellpadding="0" cellspacing="0">
                                 <h:panelGrid columns="1" cellspacing="0">
                                     <p:outputLabel value="Valor Unitário (R$)" for="vlUni" />
-                                    <p:inputNumber id="vlUni" value="#{cadastroProdutoBean.produto.proValorUni}" decimalPlaces="2" minValue="0" symbol="R$ " />
+                                    <p:inputNumber id="vlUni" value="#{cadastroProdutoBean.produto.proValorUni}" decimalPlaces="2" minValue="0" symbol="R$ " required="true" />
                                 </h:panelGrid>
 
                                 <h:panelGrid columns="1" cellspacing="0">

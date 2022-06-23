@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
 import javax.inject.Named;
+import javax.persistence.Query;
 
 /**
  *
@@ -19,6 +20,8 @@ public class ClienteService extends BaseService<Cliente> {
     @Override
     protected List<FiltrosPesquisa> getFiltros(Map<String, Object> filtros) {
         List<FiltrosPesquisa> fp = new ArrayList<>();
+        add(fp, "c.cliCpf = '?cliCpf'", "cliCpf", filtros.get("cliCpf"));
+        add(fp, "c.cliEmail = '?cliEmail'", "cliEmail", filtros.get("cliEmail"));
         return fp;
     }
 
@@ -29,6 +32,13 @@ public class ClienteService extends BaseService<Cliente> {
 
     public Cliente getClientePorCodigo(int codigo) {
         return getEntityManager().find(Cliente.class, codigo);
+    }
+
+    public List<Cliente> filtrar(Map<String, Object> filtros) {
+        String sql = "SELECT c FROM Cliente c";
+        sql = adicionarFiltros(sql, getFiltros(filtros));
+        Query query = getEntityManager().createQuery(sql);
+        return query.getResultList();
     }
 
     public Cliente getClientePorUsuario(String usuario) {

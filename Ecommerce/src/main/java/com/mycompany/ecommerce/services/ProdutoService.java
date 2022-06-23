@@ -65,11 +65,11 @@ public class ProdutoService extends BaseService<Produto> {
         } else if (isLinha) {
             String linha = filtros.get("linha");
             sql += " INNER JOIN LINHA L ON L.LIN_COD = P.PRO_LINHA "
-                    + " WHERE L.LIN_DESC LIKE '%" + linha + "%'";
+                    + " WHERE L.LIN_COD = " + linha;
         } else if (isMarca) {
             String marca = filtros.get("marca");
             sql += " INNER JOIN MARCA M ON M.MAR_COD = P.PRO_MARCA "
-                    + " WHERE M.MAR_DESC LIKE '%" + marca + "%'";
+                    + " WHERE M.MAR_COD = " + marca;
         } else {
             return new ArrayList<>();
         }

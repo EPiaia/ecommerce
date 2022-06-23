@@ -12,7 +12,6 @@ import com.mycompany.ecommerce.services.ProdutoxImagemService;
 import com.mycompany.ecommerce.utils.ImageUtil;
 import com.mycompany.ecommerce.utils.JsfUtil;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -64,22 +63,6 @@ public class CadastroProdutoBean implements Serializable {
     public boolean validaCampos() {
         if (produto == null) {
             JsfUtil.warn("Escolha ou crie um produto para salvar");
-            return false;
-        }
-        if (produto.getProDesc() == null) {
-            JsfUtil.warn("O campo \"Descrição\" é obrigatório");
-            return false;
-        }
-        if (produto.getProMarca() == null) {
-            JsfUtil.warn("O campo \"Marca\" é obrigatório");
-            return false;
-        }
-        if (produto.getProLinha() == null) {
-            JsfUtil.warn("O campo \"Linha\" é obrigatório");
-            return false;
-        }
-        if (produto.getProValorUni() == null || produto.getProValorUni().compareTo(BigDecimal.ZERO) < 1) {
-            JsfUtil.warn("Insira um Valor Unitário válido");
             return false;
         }
         if ((produto.getProDescDtIni() != null || produto.getProDescDtFin() != null) && produto.getProPerDesc() == null) {

@@ -12,6 +12,10 @@ import com.mycompany.ecommerce.utils.JsfUtil;
 import com.mycompany.ecommerce.utils.StringUtil;
 import com.mycompany.ecommerce.utils.TipoAcessoEnum;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -34,8 +38,7 @@ public class CadastroClienteBean implements Serializable {
     private String senha;
 
     public void cadastrarCliente() {
-        if (isExisteUsuarioComLogin()) {
-            JsfUtil.warn("Já existe um usuário com o login digitado");
+        if (!isClienteValido()) {
             return;
         }
         Usuario usuario = new Usuario();
@@ -58,6 +61,35 @@ public class CadastroClienteBean implements Serializable {
         this.cliente.setCliUsuario(usuario);
         clienteService.save(this.cliente);
         JsfUtil.redirect("/Ecommerce/login.xhtml");
+    }
+
+    public boolean isClienteValido() {
+        if (isExisteUsuarioComLogin()) {
+            JsfUtil.warn("Já existe um usuário com o login digitado");
+            return false;
+        }
+        if (this.senha.length() < 6) {
+            JsfUtil.warn("A senha deve possui entre 6 e 12 caracteres");
+            return false;
+        }
+        List<Cliente> clientes = new ArrayList<>();
+        Map<String, Object> filtros = new HashMap<>();
+        String cpf = this.cliente.getCliCpf();
+        cpf = cpf.replace(".", "").replace("-", "");
+        filtros.put("cliCpf", cpf);
+        clientes = clienteService.filtrar(filtros);
+        if (cliente != null && !clientes.isEmpty()) {
+            JsfUtil.warn("Um cliente com este CPF já está cadastrado");
+            return false;
+        }
+        filtros.clear();
+        filtros.put("cliEmail", cliente.getCliEmail());
+        clientes = clienteService.filtrar(filtros);
+        if (cliente != null && !clientes.isEmpty()) {
+            JsfUtil.warn("Um cliente com este e-mail já está cadastrado");
+            return false;
+        }
+        return true;
     }
 
     public boolean isExisteUsuarioComLogin() {

@@ -28,7 +28,7 @@
         </script>
         <div class="topbar">
             <h:link outcome="/index" title="Ir para a Página Principal">
-                <p:graphicImage library="imagens" name="logo-amazon.png" styleClass="imgLogo" />
+                <p:graphicImage library="imagens" name="logo.png" styleClass="imgLogo" />
             </h:link>
             <h:form id="formBusca" styleClass="formBusca">
                 <div class="ui-inputgroup">
@@ -44,8 +44,9 @@
                 </p:menuButton>
                 <p:button styleClass="btnTopBar btnConta" outcome="login" icon="pi pi-sign-in" rendered="#{geralBean.tipoAcessoUsuarioPublico}" />
                 <p:badge value="#{carrinhoBean.carrinho.itens.size()}" visible="#{carrinhoBean.carrinho.itens.size() gt 0}" styleClass="badgeCarinho">
-                    <p:commandButton id="btnCarrinho" styleClass="btnTopBar btnCarrinho" icon="pi pi-shopping-cart" rendered="#{not geralBean.tipoAcessoAdmin}" />
+                    <p:commandButton id="btnCarrinho" styleClass="btnTopBar btnCarrinho" icon="pi pi-shopping-cart" rendered="#{geralBean.tipoAcessoCliente}" />
                 </p:badge>
+                <p:button styleClass="btnTopBar btnCarrinho" outcome="login" icon="pi pi-shopping-cart" rendered="#{geralBean.tipoAcessoUsuarioPublico}" />
                 <p:overlayPanel id="carrinho" for="btnCarrinho">
                     <p:panel header="Carrinho">
                         <p:dataGrid value="#{carrinhoBean.carrinho.itens}" var="item" columns="1" emptyMessage="O carrinho está vazio">

@@ -39,6 +39,9 @@
                     </p:panelGrid>
                 </p:panelGrid>
                 <f:facet name="footer">
+                    <p:commandButton value="Imprimir" type="button" icon="pi pi-print">
+                        <p:printer target=":form1:tbPedidos" title="Relatório de Pedidos" />
+                    </p:commandButton>
                     <p:commandButton value="Pesquisar" icon="pi pi-search" actionListener="#{consultaPedidosBean.pesquisar()}" update=":form1" />
                     <p:commandButton value="Limpar" icon="pi pi-trash" actionListener="#{consultaPedidosBean.limparFiltros()}" update=":form1" />
                 </f:facet>
@@ -47,13 +50,18 @@
             <br />
 
             <p:panel header="Pedidos Filtrados">
-                <p:dataTable value="#{consultaPedidosBean.pedidosFiltrados}" var="pedido" paginator="true" paginatorPosition="bottom" reflow="true"
+                <p:dataTable id="tbPedidos" value="#{consultaPedidosBean.pedidosFiltrados}" var="pedido" paginator="true" paginatorPosition="bottom" reflow="true"
                              rowKey="#{pedido.pedCod}">
-                    <p:column headerText="Código" width="100">
-                        <h:outputText value="#{pedido.pedCod}" />
-                    </p:column>
-                    <p:column headerText="Data/Hora" sortBy="#{pedido.pedData}">
+                    <p:column headerText="Data/Hora" width="200" sortBy="#{pedido.pedData}">
                         <h:outputText value="#{pedido.dataFormatada}" />
+                    </p:column>
+                    <p:column headerText="Código" width="100">
+                        <p:commandLink title="Detalhar Pedido" actionListener="#{consultaPedidosBean.abrirDetalhesPedido(pedido)}" process="@this" update=":form1">
+                            <h:outputText value="#{pedido.pedCod}" style="text-decoration:underline; color: blue" />
+                        </p:commandLink>
+                    </p:column>
+                    <p:column headerText="Cliente" rendered="#{geralBean.tipoAcessoAdmin}" >
+                        <h:outputText value="#{pedido.pedEndEntrega.endCliente.cliNome}" />
                     </p:column>
                     <p:column headerText="Status">
                         <h:outputText value="#{pedido.status.statusLabel}" />
@@ -63,8 +71,8 @@
                             <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Ações">
-                        <p:commandButton value="Detalhar" icon="pi pi-external-link" actionListener="#{consultaPedidosBean.abrirDetalhesPedido(pedido)}" process="@this" update=":form1" />
+                    <p:column headerText="Forma de Pagamento">
+                        <h:outputText value="#{pedido.pedForPag.formaPagLabel}" />
                     </p:column>
                 </p:dataTable>
             </p:panel>
