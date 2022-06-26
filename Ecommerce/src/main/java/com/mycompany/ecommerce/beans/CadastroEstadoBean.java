@@ -2,6 +2,7 @@ package com.mycompany.ecommerce.beans;
 
 import com.mycompany.ecommerce.domains.Estado;
 import com.mycompany.ecommerce.domains.Pais;
+import com.mycompany.ecommerce.services.CidadeService;
 import com.mycompany.ecommerce.services.EstadoService;
 import com.mycompany.ecommerce.services.PaisService;
 import com.mycompany.ecommerce.utils.JsfUtil;
@@ -28,6 +29,8 @@ public class CadastroEstadoBean implements Serializable {
     private EstadoService es;
     @EJB
     private PaisService ps;
+    @EJB
+    private CidadeService cs;
 
     private Estado estado;
     private Estado filtroEstado = new Estado();
@@ -64,6 +67,10 @@ public class CadastroEstadoBean implements Serializable {
     public void deletar() {
         if (estado == null || estado.getEstCod() == null) {
             JsfUtil.warn("Selecione um registro para deletar");
+            return;
+        }
+        if (cs.isExisteCidadeNoEstado(estado)) {
+            JsfUtil.warn("Este estado não pode ser deletado porque está sendo referenciado por uma cidade");
             return;
         }
         es.delete(estado);

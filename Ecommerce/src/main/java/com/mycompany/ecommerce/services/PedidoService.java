@@ -1,10 +1,12 @@
 package com.mycompany.ecommerce.services;
 
 import com.mycompany.ecommerce.domains.Carrinho;
+import com.mycompany.ecommerce.domains.FormaPag;
 import com.mycompany.ecommerce.domains.Item;
 import com.mycompany.ecommerce.domains.Parcela;
 import com.mycompany.ecommerce.domains.Pedido;
 import com.mycompany.ecommerce.domains.PedxProd;
+import com.mycompany.ecommerce.domains.Produto;
 import com.mycompany.ecommerce.utils.FiltrosPesquisa;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,6 +79,18 @@ public class PedidoService extends BaseService<Pedido> {
             parcela.getParcelaPk().setPrcSeq(countPed);
             ps.save(parcela);
         }
+    }
+
+    public boolean isExistePedidoComFormaPag(FormaPag formaPag) {
+        String sql = "SELECT P.* FROM PEDIDO P WHERE P.PED_FORPAG = " + formaPag.getFopCod();
+        List<Pedido> retorno = executeNativeQuery(Pedido.class, sql);
+        return retorno != null && !retorno.isEmpty();
+    }
+
+    public boolean isExistePedidoComProduto(Produto produto) {
+        String sql = "SELECT P.* FROM PEDXPROD P WHERE P.PXP_PROCOD = " + produto.getProCod();
+        List<PedxProd> retorno = executeNativeQuery(PedxProd.class, sql);
+        return retorno != null && !retorno.isEmpty();
     }
 
 }

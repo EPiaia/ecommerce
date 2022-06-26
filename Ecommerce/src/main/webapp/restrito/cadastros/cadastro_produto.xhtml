@@ -17,6 +17,12 @@
                             <p:outputLabel value="Código" for="codigo" />
                             <p:inputText id="codigo" value="#{cadastroProdutoBean.produto.proCod}" disabled="true" styleClass="inputTextCodigo" />
 
+                            <p:outputLabel value="Situação" for="situacao" />
+                            <p:selectOneRadio id="situacao" value="#{cadastroProdutoBean.produto.proAtiina}">
+                                <f:selectItem itemLabel="Ativo" itemValue="A" />
+                                <f:selectItem itemLabel="Inativo" itemValue="I" />
+                            </p:selectOneRadio>
+
                             <p:outputLabel value="Descrição" for="descricao" />
                             <p:inputText id="descricao" value="#{cadastroProdutoBean.produto.proDesc}" maxlength="50" required="true" />
 
@@ -141,6 +147,9 @@
                         </p:column>
                         <p:column headerText="Desc. Válido">
                             <h:outputText value="#{produto.proDescDtFinFormatada}" />
+                        </p:column>
+                        <p:column headerText="Situacao">
+                            <h:outputText value="#{produto.ativoInativoCompleto}" />
                         </p:column>
                     </p:dataTable>
                 </p:panel>

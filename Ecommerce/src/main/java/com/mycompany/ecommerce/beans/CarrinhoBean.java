@@ -66,7 +66,7 @@ public class CarrinhoBean implements Serializable {
         Configuracao configuracao = confService.getConfiguracao();
         this.carrinho.setConfiguracoes(configuracao);
         preencherEnderecos();
-        formasPagDisponiveis = fps.getFormasDePagamento();
+        formasPagDisponiveis = fps.getFormasDePagamentoAtivas();
     }
 
     public void cancelarCarrinho() {
@@ -129,6 +129,7 @@ public class CarrinhoBean implements Serializable {
         preencherEnderecos();
         this.carrinho.recalcularValores();
         JsfUtil.pfHideDialog("wvCadEndereco");
+        JsfUtil.info("Endereço cadastrado com sucesso");
     }
 
     public boolean validarEndereco() {

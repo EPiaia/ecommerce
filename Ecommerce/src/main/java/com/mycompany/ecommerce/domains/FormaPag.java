@@ -23,6 +23,9 @@ public class FormaPag implements Serializable {
     @Column(name = "FOP_COD")
     private Integer fopCod;
     @NotNull
+    @Column(name = "FOP_ATIINA")
+    private String fopAtiina = "A";
+    @NotNull
     @Column(name = "FOP_DESC")
     private String fopDesc;
     @NotNull
@@ -44,6 +47,14 @@ public class FormaPag implements Serializable {
 
     public void setFopCod(Integer fopCod) {
         this.fopCod = fopCod;
+    }
+
+    public String getFopAtiina() {
+        return fopAtiina;
+    }
+
+    public void setFopAtiina(String fopAtiina) {
+        this.fopAtiina = fopAtiina;
     }
 
     public String getFopDesc() {
@@ -88,6 +99,16 @@ public class FormaPag implements Serializable {
 
     public String getFormaPagLabel() {
         return this.fopCod + " - " + this.fopDesc;
+    }
+
+    public String getAtivoInativoCompleto() {
+        if ("A".equals(this.fopAtiina)) {
+            return "Ativo";
+        } else if ("I".equals(this.fopAtiina)) {
+            return "Inativo";
+        } else {
+            return "";
+        }
     }
 
     @Override

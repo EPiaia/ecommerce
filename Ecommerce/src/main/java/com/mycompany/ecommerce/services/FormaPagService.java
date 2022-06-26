@@ -32,6 +32,11 @@ public class FormaPagService extends BaseService<FormaPag> {
         return super.executeNativeQuery(FormaPag.class, query);
     }
 
+    public List<FormaPag> getFormasDePagamentoAtivas() {
+        String query = "SELECT FP.* FROM FORMA_PAG FP WHERE FP.FOP_ATIINA = 'A'";
+        return super.executeNativeQuery(FormaPag.class, query);
+    }
+
     public List<FormaPag> filtrar(Map<String, Object> filtros) {
         String sql = "SELECT fp FROM FormaPag fp";
         sql = adicionarFiltros(sql, getFiltros(filtros));

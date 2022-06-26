@@ -3,6 +3,7 @@ package com.mycompany.ecommerce.beans;
 import com.mycompany.ecommerce.domains.Cidade;
 import com.mycompany.ecommerce.domains.Estado;
 import com.mycompany.ecommerce.services.CidadeService;
+import com.mycompany.ecommerce.services.EnderecoService;
 import com.mycompany.ecommerce.services.EstadoService;
 import com.mycompany.ecommerce.utils.JsfUtil;
 import java.io.Serializable;
@@ -28,6 +29,8 @@ public class CadastroCidadeBean implements Serializable {
     private CidadeService cs;
     @EJB
     private EstadoService es;
+    @EJB
+    private EnderecoService eds;
 
     private Cidade cidade;
     private Cidade filtroCidade = new Cidade();
@@ -64,6 +67,10 @@ public class CadastroCidadeBean implements Serializable {
     public void deletar() {
         if (cidade == null || cidade.getCidCod() == null) {
             JsfUtil.warn("Selecione um registro para deletar");
+            return;
+        }
+        if (eds.isExisteEnderecoDaCidade(cidade)) {
+            JsfUtil.warn("Esta cidade não pode ser deletada porque está sendo referenciada por um endereço");
             return;
         }
         cs.delete(cidade);

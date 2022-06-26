@@ -17,6 +17,12 @@
                             <p:outputLabel value="Código" for="codFormaPag" />
                             <p:inputText id="codFormaPag" value="#{cadastroFormaPagBean.formaPag.fopCod}" disabled="true" styleClass="inputTextCodigo" />
 
+                            <p:outputLabel value="Situação" for="situacao" />
+                            <p:selectOneRadio id="situacao" value="#{cadastroFormaPagBean.formaPag.fopAtiina}">
+                                <f:selectItem itemLabel="Ativo" itemValue="A" />
+                                <f:selectItem itemLabel="Inativo" itemValue="I" />
+                            </p:selectOneRadio>
+
                             <p:outputLabel value="Descrição" for="ipFormaPag" />
                             <p:inputText id="ipFormaPag" value="#{cadastroFormaPagBean.formaPag.fopDesc}" maxlength="50" required="true" />
 
@@ -67,6 +73,9 @@
                         </p:column>
                         <p:column headerText="Perc. Desconto">
                             <h:outputText value="#{formaPag.percDescFormatado}" />
+                        </p:column>
+                        <p:column headerText="Situação">
+                            <h:outputText value="#{formaPag.ativoInativoCompleto}" />
                         </p:column>
                     </p:dataTable>
                 </p:panel>

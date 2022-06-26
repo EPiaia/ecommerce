@@ -2,6 +2,7 @@ package com.mycompany.ecommerce.beans;
 
 import com.mycompany.ecommerce.domains.Linha;
 import com.mycompany.ecommerce.services.LinhaService;
+import com.mycompany.ecommerce.services.ProdutoService;
 import com.mycompany.ecommerce.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class CadastroLinhaBean implements Serializable {
 
     @EJB
     private LinhaService ls;
+    @EJB
+    private ProdutoService ps;
 
     private Linha linha;
     private List<Linha> linhasDisponiveis = new ArrayList<>();
@@ -63,6 +66,10 @@ public class CadastroLinhaBean implements Serializable {
     public void deletar() {
         if (linha == null || linha.getLinCod() == null) {
             JsfUtil.warn("Selecione um registro para deletar");
+            return;
+        }
+        if (ps.isExisteProdutoDaLinha(linha)) {
+            JsfUtil.warn("Esta linha não pode ser deletada porque está sendo referenciada por um produto");
             return;
         }
         ls.delete(linha);

@@ -2,6 +2,7 @@ package com.mycompany.ecommerce.beans;
 
 import com.mycompany.ecommerce.domains.FormaPag;
 import com.mycompany.ecommerce.services.FormaPagService;
+import com.mycompany.ecommerce.services.PedidoService;
 import com.mycompany.ecommerce.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class CadastroFormaPagBean implements Serializable {
 
     @EJB
     private FormaPagService fps;
+    @EJB
+    private PedidoService ps;
 
     private FormaPag formaPag;
     private FormaPag filtroFormaPag = new FormaPag();
@@ -58,6 +61,10 @@ public class CadastroFormaPagBean implements Serializable {
     public void deletar() {
         if (formaPag == null || formaPag.getFopCod() == null) {
             JsfUtil.warn("Selecione um registro para deletar");
+            return;
+        }
+        if (ps.isExistePedidoComFormaPag(formaPag)) {
+            JsfUtil.warn("Esta forma de pagamento não pode ser deletada porque um pedido faz referência a ela");
             return;
         }
         fps.delete(formaPag);

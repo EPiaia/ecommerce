@@ -7,6 +7,7 @@ import com.mycompany.ecommerce.domains.ProdutoxImagem;
 import com.mycompany.ecommerce.domains.ProdutoxImagemPK;
 import com.mycompany.ecommerce.services.LinhaService;
 import com.mycompany.ecommerce.services.MarcaService;
+import com.mycompany.ecommerce.services.PedidoService;
 import com.mycompany.ecommerce.services.ProdutoService;
 import com.mycompany.ecommerce.services.ProdutoxImagemService;
 import com.mycompany.ecommerce.utils.ImageUtil;
@@ -40,6 +41,8 @@ public class CadastroProdutoBean implements Serializable {
     private LinhaService ls;
     @EJB
     private ProdutoxImagemService pis;
+    @EJB
+    private PedidoService pedService;
 
     private Produto produto;
 
@@ -87,6 +90,10 @@ public class CadastroProdutoBean implements Serializable {
     public void deletar() {
         if (produto == null || produto.getProCod() == null) {
             JsfUtil.warn("Selecione um registro para deletar");
+            return;
+        }
+        if (pedService.isExistePedidoComProduto(produto)) {
+            JsfUtil.warn("Este produto não pode ser deletado porque está sendo referenciado por um pedido");
             return;
         }
         ps.delete(produto);

@@ -1,6 +1,7 @@
 package com.mycompany.ecommerce.services;
 
 import com.mycompany.ecommerce.domains.Estado;
+import com.mycompany.ecommerce.domains.Pais;
 import com.mycompany.ecommerce.utils.FiltrosPesquisa;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,12 @@ public class EstadoService extends BaseService<Estado> {
     public void delete(Estado estado) {
         String sql = "DELETE FROM Estado WHERE EST_COD = " + estado.getEstCod();
         super.executeNativeUpdate(sql);
+    }
+
+    public boolean isExisteEstadoDoPais(Pais pais) {
+        String sql = "SELECT E.* FROM ESTADO E WHERE E.EST_PAIS = " + pais.getPaisCod();
+        List<Estado> retorno = executeNativeQuery(Estado.class, sql);
+        return retorno != null && !retorno.isEmpty();
     }
 
 }

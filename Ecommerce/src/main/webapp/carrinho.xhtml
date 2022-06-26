@@ -281,7 +281,7 @@
                     </p:panelGrid>
                 </p:panel>
                 <f:facet name="footer">
-                    <p:commandButton value="Cadastrar" icon="pi pi-save" actionListener="#{carrinhoBean.cadastrarEndereco()}" update=":form1:pnEntrega" process="@this :formPesquisa:panelCadEnd" />
+                    <p:commandButton value="Cadastrar" icon="pi pi-save" actionListener="#{carrinhoBean.cadastrarEndereco()}" update=":form1:pnEntrega :form1:mensagens" process="@this :formPesquisa:panelCadEnd" />
                     <p:commandButton value="Fechar" icon="pi pi-times" onclick="PF('wvCadEndereco').hide()" />
                 </f:facet>
             </p:dialog>

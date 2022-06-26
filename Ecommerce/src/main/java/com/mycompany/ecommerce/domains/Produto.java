@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -32,6 +33,9 @@ public class Produto implements Serializable {
     @GeneratedValue
     @Column(name = "PRO_COD")
     private Integer proCod;
+    @NotNull
+    @Column(name = "PRO_ATIINA")
+    private String proAtiina = "A";
     @Column(name = "PRO_DESC")
     private String proDesc;
     @JoinColumn(name = "PRO_MARCA", referencedColumnName = "MAR_COD")
@@ -64,6 +68,14 @@ public class Produto implements Serializable {
 
     public void setProCod(Integer proCod) {
         this.proCod = proCod;
+    }
+
+    public String getProAtiina() {
+        return proAtiina;
+    }
+
+    public void setProAtiina(String proAtiina) {
+        this.proAtiina = proAtiina;
     }
 
     public String getProDesc() {
@@ -183,6 +195,15 @@ public class Produto implements Serializable {
 
     public String getItemLabel() {
         return this.proCod + " - " + this.proDesc + " (" + this.proMarca.getMarDesc() + ")";
+    }
+
+    public String getAtivoInativoCompleto() {
+        if ("A".equals(this.proAtiina)) {
+            return "Ativo";
+        } else if ("I".equals(this.proAtiina)) {
+            return "Inativo";
+        }
+        return "";
     }
 
     public BigDecimal getDescontoUnitario() {

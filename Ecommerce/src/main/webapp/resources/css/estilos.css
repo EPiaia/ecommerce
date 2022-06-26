@@ -56,6 +56,19 @@ body .ui-panelgrid .ui-panelgrid-cell {
     height: 100% !important;
 }
 
+.ui-radiobutton-box.ui-state-active {
+    border-color: #D95050 !important;
+    background: #D95050 !important;
+}
+
+body .ui-tabs.ui-tabs-top > .ui-tabs-nav li.ui-tabs-header.ui-state-active {
+    border-color: #D95050 !important;
+}
+
+body .ui-tabs .ui-tabs-nav li.ui-tabs-header.ui-state-active a {
+    color: #D95050 !important;
+}
+
 
 
 /* CUSTOMIZAÇÕES DA TOPBAR */

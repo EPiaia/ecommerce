@@ -1,5 +1,6 @@
 package com.mycompany.ecommerce.services;
 
+import com.mycompany.ecommerce.domains.Cidade;
 import com.mycompany.ecommerce.domains.Cliente;
 import com.mycompany.ecommerce.domains.Endereco;
 import com.mycompany.ecommerce.utils.FiltrosPesquisa;
@@ -39,5 +40,14 @@ public class EnderecoService extends BaseService<Endereco> {
         } else {
             return enderecos.get(0);
         }
+    }
+
+    public boolean isExisteEnderecoDaCidade(Cidade cidade) {
+        if (cidade == null) {
+            return false;
+        }
+        String sql = "SELECT E.* FROM ENDERECO E WHERE E.END_CIDADE = " + cidade.getCidCod();
+        List<Endereco> retorno = executeNativeQuery(Endereco.class, sql);
+        return retorno != null && !retorno.isEmpty();
     }
 }

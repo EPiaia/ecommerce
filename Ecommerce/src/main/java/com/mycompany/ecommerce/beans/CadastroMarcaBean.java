@@ -2,6 +2,7 @@ package com.mycompany.ecommerce.beans;
 
 import com.mycompany.ecommerce.domains.Marca;
 import com.mycompany.ecommerce.services.MarcaService;
+import com.mycompany.ecommerce.services.ProdutoService;
 import com.mycompany.ecommerce.utils.JsfUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class CadastroMarcaBean implements Serializable {
 
     @EJB
     private MarcaService ms;
+    @EJB
+    private ProdutoService ps;
 
     private Marca marca;
     private List<Marca> marcasDisponiveis = new ArrayList<>();
@@ -65,6 +68,10 @@ public class CadastroMarcaBean implements Serializable {
     public void deletar() {
         if (marca == null || marca.getMarCod() == null) {
             JsfUtil.warn("Selecione um registro para deletar");
+            return;
+        }
+        if (ps.isExisteProdutoDaMarca(marca)) {
+            JsfUtil.warn("Esta marca não pode ser deletada porque está sendo referenciada por um produto");
             return;
         }
         ms.delete(marca);
