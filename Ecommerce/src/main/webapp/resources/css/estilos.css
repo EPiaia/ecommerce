@@ -301,3 +301,66 @@ body .ui-tabs .ui-tabs-nav li.ui-tabs-header.ui-state-active a {
 .panelApresentacao > .ui-panel-content {
     border-radius: 10px !important;
 }
+
+.menu-step {
+    display: flex;
+    justify-content: center;
+}
+
+.menu-step:before {
+    content: " ";
+    border: 1px solid #D95050;
+    width: 79%;
+    margin-top: 34px;
+    display: block;
+    position: absolute;
+}
+
+.div-btn {
+    width: 12%;
+    height: 85px;
+    text-align: center;
+}
+
+.menu-step .div-btn .btn-step {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    border: 2px solid #D95050 !important;
+    font-weight: bold;
+    font-size: medium;
+    margin-top: 15px;
+    background-color: #eaeff2;
+    color: black;
+}
+
+.ui-button.btn-step {
+    background-color: #eaeff2 !important;
+}
+
+.menu-step .div-btn .btn-step-ativo {
+    background-color: #D95050 !important;
+    color: white;
+}
+
+.menu-step .div-btn .btn-step:hover {
+    background-color: #D95050 !important;
+    color: white !important;
+}
+
+.btn-nav {
+    width: 125px;
+    border-radius: 20px !important;
+}
+
+.btn-nav:hover {
+    transform: scale(1.02);
+    box-shadow: 1px 1px 4px black;
+    transition: 0.3s;
+}
+
+.toolbar {
+    border: none !important;
+    background: white !important;
+}

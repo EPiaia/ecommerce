@@ -82,17 +82,16 @@ public class CarrinhoBean implements Serializable {
     }
 
     public String onFlowProcess(FlowEvent event) {
-        if ("tabEndEntrega".equals(event.getOldStep()) && "tabFormaPag".equals(event.getNewStep())) {
+        JsfUtil.pfUpdate("form1:mensagens");
+        if ("tabFormaPag".equals(event.getNewStep()) || "tabRevPed".equals(event.getNewStep())) {
             if (this.carrinho.getEnderecoEntrega() == null) {
                 JsfUtil.error("Selecione um Endereço de Entrega");
-                JsfUtil.pfUpdate("form1:mensagens");
                 return event.getOldStep();
             }
         }
-        if ("tabFormaPag".equals(event.getOldStep()) && "tabRevPed".equals(event.getNewStep())) {
+        if ("tabRevPed".equals(event.getNewStep())) {
             if (this.carrinho.getFormaPagamento() == null) {
                 JsfUtil.error("Selecione uma Forma de Pagamento");
-                JsfUtil.pfUpdate("form1:mensagens");
                 return event.getOldStep();
             }
         }
