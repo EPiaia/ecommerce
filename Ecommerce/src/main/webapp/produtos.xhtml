@@ -8,16 +8,21 @@
     <ui:define name="title">Pesquisa de Produtos</ui:define>
 
     <ui:define name="content">
+        <style>
+            body .ui-datagrid .ui-datagrid-content {
+                border: none;
+            }
+        </style>
         <h:form id="form1">
             <p:growl id="mensagens" />
             <div class="container">
                 <div class="content">
-                    <p:outputLabel value="Pesquisa: #{pesquisaProdutosBean.descPesquisa}" styleClass="bold font-18" rendered="#{not geralBean.tipoAcessoAdmin and pesquisaProdutosBean.linkValido}" />
-                    <p:dataGrid id="dgProdutos" value="#{pesquisaProdutosBean.produtos}" var="produto"
-                                columns="4" layout="grid" rows="4" rendered="#{not geralBean.tipoAcessoAdmin and pesquisaProdutosBean.linkValido}"
-                                style="dgProdutos" emptyMessage="O carrinho está vazio">
-                        <components:produto produto="#{produto}" />
-                    </p:dataGrid>
+                    <p:panel header="Pesquisa: #{pesquisaProdutosBean.descPesquisa}" rendered="#{not geralBean.tipoAcessoAdmin and pesquisaProdutosBean.linkValido}">
+                        <p:dataGrid id="dgProdutos" value="#{pesquisaProdutosBean.produtos}" var="produto"
+                                    columns="4" layout="grid" rows="4" emptyMessage="O carrinho está vazio">
+                            <components:produto produto="#{produto}" />
+                        </p:dataGrid>
+                    </p:panel>
                 </div>
             </div>
         </h:form>

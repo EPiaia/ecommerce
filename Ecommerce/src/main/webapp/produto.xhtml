@@ -13,50 +13,60 @@
             <p:growl id="mensagens" />
             <div class="container">
                 <div class="content-produto">
-                    <p:panelGrid columns="2" layout="grid" rendered="#{produtoBean.linkValido}">
-                        <p:panelGrid columns="1" layout="grid">
-                            <p:carousel value="#{produtoBean.produto.fotosProduto}" var="foto"
-                                        numVisible="1">
-                                <h:graphicImage value="#{foto.imgBase64}" style="height: 200px; width: 200px" />
-                            </p:carousel>
-                        </p:panelGrid>
-                        <p:panelGrid columns="1" layout="grid">
-                            <h:panelGroup rendered="#{produtoBean.produto.descontoValido}">
-                                <div style="position: relative">
-                                    <div style="position: absolute; width: 100%; text-align: center" class="divPromo">
-                                        <h:outputText value="#{produtoBean.produto.percDescFormatado} de desconto" />
-                                    </div>
-                                </div>
-                            </h:panelGroup>
-                            <br />
-                            <p:outputLabel value="#{produtoBean.produto.proCod}" styleClass="bold" />
-                            <p:outputLabel value="#{produtoBean.produto.proDesc}" styleClass="bold" />
-                            <p:divider />
-                            <h:panelGroup rendered="#{produtoBean.produto.descontoValido}">
-                                <h:outputText value="#{produtoBean.produto.proValorUni}" styleClass="valorPromo font-18">
-                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
-                                </h:outputText>
+                    <p:panel styleClass="panelApresentacao">
+                        <p:panelGrid columns="2" layout="grid" rendered="#{produtoBean.linkValido}">
+                            <p:panelGrid columns="1" layout="grid">
                                 <br />
-                                <h:outputText value="#{produtoBean.produto.valorReal}" styleClass="font-18">
-                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
-                                </h:outputText>
-                            </h:panelGroup>
-                            <h:panelGroup rendered="#{not produtoBean.produto.descontoValido}" styleClass="font-18">
-                                <h:outputText value="#{produtoBean.produto.valorReal}">
-                                    <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
-                                </h:outputText>
-                            </h:panelGroup>
-                            <br />
-                            <p:outputLabel value="#{produtoBean.produto.proObservacoes}" />
-                            <br />
-                            <p:commandButton value="Adicionar ao Carrinho" icon="pi pi-shopping-cart" process="@this" update=":form1:mensagens :formBtnsTopbar"
-                                             actionListener="#{carrinhoBean.adicionarProdutoAoCarrinho(produtoBean.produto)}"
-                                             rendered="#{geralBean.tipoAcessoCliente and not carrinhoBean.carrinho.isProdutoEstaNoCarrinho(produtoBean.produto)}" />
-                            <p:button value="Adicionar ao Carrinho" icon="pi pi-shopping-cart" outcome="login" rendered="#{geralBean.tipoAcessoUsuarioPublico}" />
-                            <p:commandButton value="Adicionado ao Carrinho" icon="pi pi-check"
-                                             rendered="#{carrinhoBean.carrinho.isProdutoEstaNoCarrinho(produtoBean.produto)}" />
+                                <p:carousel value="#{produtoBean.produto.fotosProduto}" var="foto"
+                                            numVisible="1">
+                                    <h:graphicImage value="#{foto.imgBase64}" style="height: 200px; width: 200px" />
+                                </p:carousel>
+                            </p:panelGrid>
+                            <p:panelGrid columns="1" layout="grid">
+                                <h:panelGroup rendered="#{produtoBean.produto.descontoValido}">
+                                    <div style="position: relative">
+                                        <div class="divPromo divPromoProduto">
+                                            <h:outputText value="#{produtoBean.produto.percDescFormatado} de desconto" />
+                                        </div>
+                                    </div>
+                                </h:panelGroup>
+                                <br />
+                                <p:outputLabel value="#{produtoBean.produto.proCod}" styleClass="bold font-18" />
+                                <p:outputLabel value="#{produtoBean.produto.proDesc}" styleClass="bold font-18" />
+                                <p:divider />
+                                <h:panelGroup rendered="#{produtoBean.produto.descontoValido}">
+                                    <p:outputLabel value="Valor Unitário: " styleClass="bold font-18" />
+                                    <h:outputText value="#{produtoBean.produto.proValorUni}" styleClass="valorPromo font-18">
+                                        <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                    </h:outputText>
+                                    <br />
+                                    <p:outputLabel value="Valor Promocional: " styleClass="bold font-18" />
+                                    <h:outputText value="#{produtoBean.produto.valorReal}" styleClass="font-18">
+                                        <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not produtoBean.produto.descontoValido}" styleClass="font-18">
+                                    <p:outputLabel value="Valor Unitário: " styleClass="bold font-18" />
+                                    <h:outputText value="#{produtoBean.produto.valorReal}">
+                                        <f:convertNumber type="currency" locale="pt_Br" maxFractionDigits="2" />
+                                    </h:outputText>
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{not empty produtoBean.produto.proObservacoes}">
+                                    <p:divider />
+                                    <p:outputLabel value="Informações sobre o produto" styleClass="bold font-16" />
+                                    <br />
+                                    <p:outputLabel value="#{produtoBean.produto.proObservacoes}" styleClass="font-16" />
+                                </h:panelGroup>
+                                <br />
+                                <p:commandButton value="Adicionar ao Carrinho" icon="pi pi-shopping-cart" process="@this" update=":form1:mensagens :formBtnsTopbar"
+                                                 actionListener="#{carrinhoBean.adicionarProdutoAoCarrinho(produtoBean.produto)}" style="width: 100%"
+                                                 rendered="#{geralBean.tipoAcessoCliente and not carrinhoBean.carrinho.isProdutoEstaNoCarrinho(produtoBean.produto)}" />
+                                <p:button value="Adicionar ao Carrinho" icon="pi pi-shopping-cart" outcome="login" rendered="#{geralBean.tipoAcessoUsuarioPublico}" style="width: 100%" />
+                                <p:commandButton value="Adicionado ao Carrinho" icon="pi pi-check" style="width: 100%"
+                                                 rendered="#{carrinhoBean.carrinho.isProdutoEstaNoCarrinho(produtoBean.produto)}" />
+                            </p:panelGrid>
                         </p:panelGrid>
-                    </p:panelGrid>
+                    </p:panel>
                 </div>
             </div>
         </h:form>

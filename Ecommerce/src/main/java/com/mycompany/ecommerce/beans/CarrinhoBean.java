@@ -54,6 +54,7 @@ public class CarrinhoBean implements Serializable {
     private List<Endereco> enderecosDisponiveis = new ArrayList<>();
     private Endereco enderecoCadastro;
     private List<FormaPag> formasPagDisponiveis = new ArrayList<>();
+    private Integer indexSteps = 0;
 
     @PostConstruct
     private void init() {
@@ -94,6 +95,15 @@ public class CarrinhoBean implements Serializable {
                 JsfUtil.pfUpdate("form1:mensagens");
                 return event.getOldStep();
             }
+        }
+        if ("tabItens".equals(event.getNewStep())) {
+            indexSteps = 0;
+        } else if ("tabEndEntrega".equals(event.getNewStep())) {
+            indexSteps = 1;
+        } else if ("tabFormaPag".equals(event.getNewStep())) {
+            indexSteps = 2;
+        } else if ("tabRevPed".equals(event.getNewStep())) {
+            indexSteps = 3;
         }
         return event.getNewStep();
     }
@@ -172,4 +182,11 @@ public class CarrinhoBean implements Serializable {
         this.enderecoCadastro = enderecoCadastro;
     }
 
+    public Integer getIndexSteps() {
+        return indexSteps;
+    }
+
+    public void setIndexSteps(Integer indexSteps) {
+        this.indexSteps = indexSteps;
+    }
 }

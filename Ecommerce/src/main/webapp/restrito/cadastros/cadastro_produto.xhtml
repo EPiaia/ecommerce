@@ -42,7 +42,7 @@
                         </p:panelGrid>
                         <p:panelGrid columns="1" layout="grid">
                             <p:outputLabel value="Observações" for="observacoes" />
-                            <p:inputTextarea id="observacoes" value="#{cadastroProdutoBean.produto.proObservacoes}" rows="4" maxlength="500" />
+                            <p:inputTextarea id="observacoes" value="#{cadastroProdutoBean.produto.proObservacoes}" rows="6" maxlength="500" />
 
                             <h:panelGrid columns="2" cellpadding="0" cellspacing="0">
                                 <h:panelGrid columns="1" cellspacing="0">
@@ -110,8 +110,7 @@
                         <p:inputText value="#{cadastroProdutoBean.filtroProduto.proMarca}" />
                         <p:outputLabel value="Linha" for="@next" />
                         <p:inputText value="#{cadastroProdutoBean.filtroProduto.proLinha}" />
-                        <p:outputLabel value="Com Desconto" for="@next" />
-                        <p:selectBooleanCheckbox value="#{cadastroProdutoBean.filtroComDescProd}" />
+                        <p:selectBooleanCheckbox value="#{cadastroProdutoBean.filtroComDescProd}" itemLabel="Com Desconto" />
                         <f:facet name="footer">
                             <h:panelGroup>
                                 <p:commandButton value="Pesquisar" icon="pi pi-search" style="margin-right: 10px" actionListener="#{cadastroProdutoBean.pesquisarProdutos()}" update=":formPesquisa:dtProdutos" />

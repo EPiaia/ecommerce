@@ -43,7 +43,9 @@
                             <h:panelGroup>
                                 <p:commandButton value="Pesquisar" icon="pi pi-search" style="margin-right: 10px"
                                                  actionListener="#{cadastroMarcaBean.pesquisarMarcas()}" update=":formPesquisa:dtMarcas" />
-                                <p:commandButton value="Limpar" icon="pi pi-trash" actionListener="#{cadastroMarcaBean.limparPesquisaMarcas()}" update="pgBscMarca" />
+                                <p:commandButton value="Limpar" icon="pi pi-trash" style="margin-right: 10px !important;"
+                                                 actionListener="#{cadastroMarcaBean.limparPesquisaMarcas()}"
+                                                 update="pgBscMarca" />
                             </h:panelGroup>
                         </f:facet>
                     </p:panelGrid>

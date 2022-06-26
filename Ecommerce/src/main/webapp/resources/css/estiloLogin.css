@@ -53,3 +53,7 @@ body .ui-panelgrid .ui-panelgrid-cell {
 .pgWidth {
     width: 100%;
 }
+
+.linkCadastrese > a:visited {
+    color: blue;
+}

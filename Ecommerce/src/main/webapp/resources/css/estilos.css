@@ -68,8 +68,10 @@ body .ui-tabs.ui-tabs-top > .ui-tabs-nav li.ui-tabs-header.ui-state-active {
 body .ui-tabs .ui-tabs-nav li.ui-tabs-header.ui-state-active a {
     color: #D95050 !important;
 }
-
-
+.ui-chkbox-box.ui-state-active {
+    border-color: #D95050 !important;
+    background: #D95050 !important;
+}
 
 /* CUSTOMIZAÇÕES DA TOPBAR */
 .topbar {
@@ -188,7 +190,14 @@ body .ui-tabs .ui-tabs-nav li.ui-tabs-header.ui-state-active a {
 .divProduto {
     text-align: center;
     border: 1px solid #dee2e6;
-    box-shadow: 1px 1px 1px 1px #dee2e6;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.divProduto:hover {
+    transform: scale(1.02);
+    box-shadow: 1px 1px 4px black;
+    transition: 0.3s;
 }
 
 .container {
@@ -262,6 +271,10 @@ body .ui-tabs .ui-tabs-nav li.ui-tabs-header.ui-state-active a {
     color: #495057 !important;
 }
 
+.styleLink:hover {
+    text-decoration: none !important;
+}
+
 .valorPromo {
     text-decoration: line-through;
 }
@@ -270,10 +283,21 @@ body .ui-tabs .ui-tabs-nav li.ui-tabs-header.ui-state-active a {
     height: 23px;
     background-color: #6CC947;
     color: white;
-    border-bottom-right-radius: 6px;
-    border-bottom-left-radius: 6px;
+}
+
+.divPromoProduto {
+    position: absolute; 
+    width: 100%; 
+    text-align: center; 
+    margin-top: -16px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
 .width-110 {
     width: 110px !important;
+}
+
+.panelApresentacao > .ui-panel-content {
+    border-radius: 10px !important;
 }
