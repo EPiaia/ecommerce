@@ -80,7 +80,7 @@
                                                 <p:panelGrid columns="3" layout="grid" columnClasses="ui-g-nopad no-pad-sides, width-90px no-pad-sides, no-pad-sides">
                                                     <p:commandButton icon="pi pi-minus" actionListener="#{carrinhoBean.carrinho.diminuirQuantidade(item)}"
                                                                      update=":form1" process="@this" style="margin-right: 0px !important" />
-                                                    <p:inputNumber value="#{item.quantidade}" minValue="1" onclick="this.select()" inputStyleClass="inputQtd">
+                                                    <p:inputNumber value="#{item.quantidade}" minValue="1" decimalPlaces="0" onclick="this.select()" inputStyleClass="inputQtd">
                                                         <p:ajax event="blur" process="@this" update=":form1" listener="#{carrinhoBean.carrinho.recalcularValores()}" />
                                                     </p:inputNumber>
                                                     <p:commandButton icon="pi pi-plus" actionListener="#{carrinhoBean.carrinho.aumentarQuantidade(item)}"

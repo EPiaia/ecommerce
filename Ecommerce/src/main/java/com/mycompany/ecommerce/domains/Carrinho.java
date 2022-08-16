@@ -225,7 +225,7 @@ public class Carrinho implements Serializable {
     public void dividirParcelas() {
         int qtdParcelas = getFormaPagamento().getFopParcelas();
         int dias = getFormaPagamento().getFopDiasPrc();
-        BigDecimal vlrParcelas = getValorTotal().divide(new BigDecimal(qtdParcelas)).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal vlrParcelas = getValorTotal().divide(new BigDecimal(qtdParcelas), 2, RoundingMode.HALF_UP);
         Date dtVencimento = new Date();
         for (int i = 1; i <= getFormaPagamento().getFopParcelas(); i++) {
             Parcela parcela = new Parcela();

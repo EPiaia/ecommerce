@@ -13,12 +13,13 @@
             <div class="container">
                 <div class="content">
                     <p:dataGrid id="dgProdutos" value="#{indexBean.produtos}" var="produto"
-                                columns="4" layout="grid" rows="4" rendered="#{not geralBean.tipoAcessoAdmin}"
-                                style="dgProdutos" emptyMessage="O carrinho está vazio">
+                                columns="4" layout="grid" rows="16" rendered="#{not geralBean.tipoAcessoAdmin}"
+                                styleClass="dgProdutos" emptyMessage="O carrinho está vazio">
                         <components:produto produto="#{produto}" />
                     </p:dataGrid>
                 </div>
             </div>
+            <br />
         </h:form>
     </ui:define>
 </ui:composition>
